@@ -1,7 +1,8 @@
 package nl.hva;
 
-import Datasets.DataSet;
+import datasets.TextFileReader;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -42,24 +43,28 @@ public class Strand {
         return result;
     }
 
-    public static void main(String[] args) {
-        DataSet dataset = new DataSet();
+    public static void main(String[] args) throws FileNotFoundException {
+        TextFileReader dataset = new TextFileReader();
+        LinkedList<Integer> smallestList = (LinkedList<Integer>) dataset.readFile("src/datasets/smallestDataSet.txt");
+        LinkedList<Integer> middleList = (LinkedList<Integer>) dataset.readFile("src/datasets/middleDataSet.txt");
+        LinkedList<Integer> bigList = (LinkedList<Integer>) dataset.readFile("src/datasets/bigDataSet.txt");
+        LinkedList<Integer> biggestList = (LinkedList<Integer>) dataset.readFile("src/datasets/biggestDataSet.txt");
         long start = 0;
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(new LinkedList<Integer>(dataset.smallestDataset)));
+        System.out.println(strandSort(smallestList));
         System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(new LinkedList<Integer>(dataset.middleDataSet)));
+        System.out.println(strandSort(middleList));
         System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(new LinkedList<Integer>(dataset.bigDataSet)));
+        System.out.println(strandSort(bigList));
         System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
 
-//        start = System.currentTimeMillis();
-//        System.out.println(strandSort(new LinkedList<Integer>(dataset.biggestDataSet)));
-//        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        System.out.println(strandSort(biggestList));
+        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
     }
 }
