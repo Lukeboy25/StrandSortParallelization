@@ -48,6 +48,6 @@ public class Strand {
         long start = System.currentTimeMillis();
         System.out.println(strandSort(new LinkedList<Integer>(dataset.dataset)));
         long estimatedTime = System.currentTimeMillis() - start;
-        System.out.println("Sorting time: " + estimatedTime);
+        System.out.println("Sorting time in milliseconds: " + estimatedTime);
     }
 }
