@@ -3,6 +3,7 @@ package nl.hva;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 public class Strand {
     // note: the input list is destroyed
@@ -42,10 +43,11 @@ public class Strand {
     }
 
     public static void main(String[] args) {
-        DataSet dataset = new DataSet();
 
+        DataSet dataset = new DataSet();
+        long start = System.currentTimeMillis();
         System.out.println(strandSort(new LinkedList<Integer>(dataset.dataset)));
-        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 3, 1, 2, 4, 5))));
-        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 3, 1, 2, 4, 3, 5, 6))));
+        long estimatedTime = System.currentTimeMillis() - start;
+        System.out.println("Sorting time: " + estimatedTime);
     }
 }
