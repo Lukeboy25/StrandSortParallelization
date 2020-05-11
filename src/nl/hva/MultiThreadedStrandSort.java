@@ -12,20 +12,49 @@ public class MultiThreadedStrandSort {
     LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
-        LinkedList<Integer> result = new LinkedList<Integer>();
-        while (list.size() > 0) {
-            LinkedList<Integer> sorted = new LinkedList<Integer>();
-            sorted.add(list.removeFirst()); //same as remove() or remove(0)
+        LinkedList<Integer> list1 = new LinkedList<Integer>(list.subList(0, (list.size() + 1)/2));
+        LinkedList<Integer> list2 = new LinkedList<Integer>(list.subList((list.size() + 1)/2, list.size()));
+
+        LinkedList<Integer> resultList1 = new LinkedList<Integer>();
+        LinkedList<Integer> resultList2 = new LinkedList<Integer>();
+
+        LinkedList<Integer> output = new LinkedList<Integer>();
+
+        while (list1.size() > 0) {
+            LinkedList<Integer> subList1 = new LinkedList<Integer>();
+
+            subList1.add(list1.removeFirst());
+
             for (Iterator<Integer> it = list.iterator(); it.hasNext(); ) {
                 Integer elem = it.next();
-                if (sorted.peekLast().compareTo(elem) <= 0) {
-                    sorted.addLast(elem); //same as add(elem) or add(0, elem)
+                if (subList1.peekLast().compareTo(elem) <= 0) {
+                    subList1.addLast(elem);
                     it.remove();
                 }
             }
-            result = merge(sorted, result);
+
+            resultList1 = merge(subList1, resultList1);
         }
-        return result;
+
+        while (list2.size() > 0) {
+            LinkedList<Integer> subList2 = new LinkedList<Integer>();
+
+            subList2.add(list2.removeFirst());
+
+            for (Iterator<Integer> it2 = list.iterator(); it2.hasNext(); ) {
+                Integer elem = it2.next();
+                if (subList2.peekLast().compareTo(elem) <= 0) {
+                    subList2.addLast(elem);
+                    it2.remove();
+                }
+            }
+
+            resultList2 = merge(subList2, resultList2);
+        }
+
+        output = merge(resultList1, resultList2);
+
+        return output;
     }
 
     private static <Integer extends Comparable<? super Integer>>
@@ -55,16 +84,16 @@ public class MultiThreadedStrandSort {
         System.out.println(strandSort(smallestList));
         System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
 
-        start = System.currentTimeMillis();
-        System.out.println(strandSort(middleList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
-
-        start = System.currentTimeMillis();
-        System.out.println(strandSort(bigList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
-
-        start = System.currentTimeMillis();
-        System.out.println(strandSort(biggestList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+//        start = System.currentTimeMillis();
+//        System.out.println(strandSort(middleList));
+//        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+//
+//        start = System.currentTimeMillis();
+//        System.out.println(strandSort(bigList));
+//        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+//
+//        start = System.currentTimeMillis();
+//        System.out.println(strandSort(biggestList));
+//        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
     }
 }
