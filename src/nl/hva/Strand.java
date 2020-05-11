@@ -43,11 +43,23 @@ public class Strand {
     }
 
     public static void main(String[] args) {
-
         DataSet dataset = new DataSet();
-        long start = System.currentTimeMillis();
-        System.out.println(strandSort(new LinkedList<Integer>(dataset.dataset)));
-        long estimatedTime = System.currentTimeMillis() - start;
-        System.out.println("Sorting time in milliseconds: " + estimatedTime);
+        long start = 0;
+
+        start = System.currentTimeMillis();
+        System.out.println(strandSort(new LinkedList<Integer>(dataset.smallestDataset)));
+        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+
+        start = System.currentTimeMillis();
+        System.out.println(strandSort(new LinkedList<Integer>(dataset.middleDataSet)));
+        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+
+        start = System.currentTimeMillis();
+        System.out.println(strandSort(new LinkedList<Integer>(dataset.bigDataSet)));
+        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+
+//        start = System.currentTimeMillis();
+//        System.out.println(strandSort(new LinkedList<Integer>(dataset.biggestDataSet)));
+//        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
     }
 }
