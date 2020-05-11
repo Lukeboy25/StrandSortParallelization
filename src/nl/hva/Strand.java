@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Strand{
+public class Strand {
     // note: the input list is destroyed
-    public static <E extends Comparable<? super E>>
-    LinkedList<E> strandSort(LinkedList<E> list) {
-        if(list.size() <= 1) return list;
+    public static <Integer extends Comparable<? super Integer>>
+    LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+        if (list.size() <= 1) return list;
 
-        LinkedList<E> result = new LinkedList<E>();
-        while(list.size() > 0){
-            LinkedList<E> sorted = new LinkedList<E>();
+        LinkedList<Integer> result = new LinkedList<Integer>();
+        while (list.size() > 0) {
+            LinkedList<Integer> sorted = new LinkedList<Integer>();
             sorted.add(list.removeFirst()); //same as remove() or remove(0)
-            for(Iterator<E> it = list.iterator(); it.hasNext(); ){
-                E elem = it.next();
-                if(sorted.peekLast().compareTo(elem) <= 0){
+            for (Iterator<Integer> it = list.iterator(); it.hasNext(); ) {
+                Integer elem = it.next();
+                if (sorted.peekLast().compareTo(elem) <= 0) {
                     sorted.addLast(elem); //same as add(elem) or add(0, elem)
                     it.remove();
                 }
@@ -26,12 +26,12 @@ public class Strand{
         return result;
     }
 
-    private static <E extends Comparable<? super E>>
-    LinkedList<E> merge(LinkedList<E> left, LinkedList<E> right) {
-        LinkedList<E> result = new LinkedList<E>();
-        while(!left.isEmpty() && !right.isEmpty()){
+    private static <Integer extends Comparable<? super Integer>>
+    LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
+        LinkedList<Integer> result = new LinkedList<Integer>();
+        while (!left.isEmpty() && !right.isEmpty()) {
             //change the direction of this comparison to change the direction of the sort
-            if(left.peek().compareTo(right.peek()) <= 0)
+            if (left.peek().compareTo(right.peek()) <= 0)
                 result.add(left.remove());
             else
                 result.add(right.remove());
@@ -42,8 +42,8 @@ public class Strand{
     }
 
     public static void main(String[] args) {
-        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3,1,2,4,5))));
-        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3,3,1,2,4,5))));
-        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3,3,1,2,4,3,5,6))));
+        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 1, 2, 4, 5))));
+        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 3, 1, 2, 4, 5))));
+        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 3, 1, 2, 4, 3, 5, 6))));
     }
 }
