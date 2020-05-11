@@ -1,9 +1,9 @@
 package nl.hva;
 
-import java.util.Arrays;
+import Datasets.DataSet;
+
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
 public class Strand {
     // note: the input list is destroyed
