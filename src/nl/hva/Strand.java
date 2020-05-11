@@ -42,7 +42,9 @@ public class Strand {
     }
 
     public static void main(String[] args) {
-        System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 1, 2, 4, 5))));
+        DataSet dataset = new DataSet();
+
+        System.out.println(strandSort(new LinkedList<Integer>(dataset.dataset)));
         System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 3, 1, 2, 4, 5))));
         System.out.println(strandSort(new LinkedList<Integer>(Arrays.asList(3, 3, 1, 2, 4, 3, 5, 6))));
     }
