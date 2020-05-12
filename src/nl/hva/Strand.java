@@ -41,19 +41,19 @@ public class Strand {
         long start = 0;
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(smallestList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+        strandSort(smallestList);
+        System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(middleList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+        strandSort(middleList);
+        System.out.println("Sorting time for 10.000 in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(bigList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+        strandSort(bigList);
+        System.out.println("Sorting time for 100.000 in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        System.out.println(strandSort(biggestList));
-        System.out.println("Sorting time in milliseconds: " + (System.currentTimeMillis() - start));
+        strandSort(biggestList);
+        System.out.println("Sorting time for 250.000 in milliseconds: " + (System.currentTimeMillis() - start));
     }
 }
