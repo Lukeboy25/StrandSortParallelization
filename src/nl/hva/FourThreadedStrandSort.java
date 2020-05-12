@@ -5,17 +5,26 @@ import datasets.TextFileReader;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
+import static helpers.PartitionLinkedList.partition;
 import static helpers.StandSortMerger.merge;
 
-public class DoubleThreadedStrandSort extends Thread {
+public class FourThreadedStrandSort extends Thread {
     public static <Integer extends Comparable<? super Integer>>
     LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
-        LinkedList<Integer> firstPart = new LinkedList<>(list.subList(0, (list.size() + 1) / 2));
-        LinkedList<Integer> secondPart = new LinkedList<>(list.subList((list.size() + 1) / 2, list.size()));
+        List<List<Integer>> partitions = partition(list, list.size() / 4);
+        List<Integer> firstPart = partitions.get(0);
+        List<Integer> secondPart = partitions.get(1);
+        List<Integer> thirdPart = partitions.get(2);
+        List<Integer> fourthPart = partitions.get(3);
+        LinkedList<Integer> outputPartOneTwo;
+        LinkedList<Integer> outputPartThreeFour;
         LinkedList<Integer> output;
 
         AtomicReference<LinkedList<Integer>> firstResultList = new AtomicReference<>(new LinkedList<>());
@@ -30,13 +39,29 @@ public class DoubleThreadedStrandSort extends Thread {
         });
         secondThread.start();
 
+        AtomicReference<LinkedList<Integer>> thirdResultList = new AtomicReference<>(new LinkedList<>());
+        Thread thirdThread = new Thread(() -> {
+            orderList((LinkedList<java.lang.Integer>)thirdPart, (AtomicReference)thirdResultList);
+        });
+        thirdThread.start();
+
+        AtomicReference<LinkedList<Integer>> fourthResultList = new AtomicReference<>(new LinkedList<>());
+        Thread fourthThread = new Thread(() -> {
+            orderList((LinkedList<java.lang.Integer>)fourthPart, (AtomicReference)fourthResultList);
+        });
+        fourthThread.start();
+
         try {
             firstThread.join();
             secondThread.join();
+            thirdThread.join();
+            fourthThread.join();
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
         }
-        output = merge(firstResultList.get(), secondResultList.get());
+        outputPartOneTwo = merge(firstResultList.get(), secondResultList.get());
+        outputPartThreeFour = merge(thirdResultList.get(), fourthResultList.get());
+        output = merge(outputPartOneTwo, outputPartThreeFour);
 
         return output;
     }
