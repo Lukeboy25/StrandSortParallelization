@@ -59,6 +59,7 @@ public class FourThreadedStrandSort extends Thread {
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
         }
+
         outputPartOneTwo = merge(firstResultList.get(), secondResultList.get());
         outputPartThreeFour = merge(thirdResultList.get(), fourthResultList.get());
         output = merge(outputPartOneTwo, outputPartThreeFour);
