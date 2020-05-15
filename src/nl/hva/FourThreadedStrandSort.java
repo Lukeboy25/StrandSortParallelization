@@ -7,11 +7,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
+import static helpers.StandSortHelperMethods.orderList;
 import static helpers.PartitionLinkedList.partition;
-import static helpers.StandSortMerger.merge;
+import static helpers.StandSortHelperMethods.merge;
 
 public class FourThreadedStrandSort extends Thread {
     public static <Integer extends Comparable<? super Integer>>
@@ -65,24 +64,6 @@ public class FourThreadedStrandSort extends Thread {
         output = merge(outputPartOneTwo, outputPartThreeFour);
 
         return output;
-    }
-
-    private static void orderList(LinkedList<Integer> listPart, AtomicReference<LinkedList> resultList) {
-        while (listPart.size() > 0) {
-            LinkedList<Integer> subList = new LinkedList<>();
-
-            subList.add(listPart.removeFirst());
-
-            for (Iterator<Integer> it = listPart.iterator(); it.hasNext(); ) {
-                Integer elem = it.next();
-                if (subList.peekLast().compareTo(elem) <= 0) {
-                    subList.addLast(elem);
-                    it.remove();
-                }
-            }
-
-            resultList.set(merge(subList, resultList.get()));
-        }
     }
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {

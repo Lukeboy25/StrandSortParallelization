@@ -3,11 +3,11 @@ package nl.hva;
 import datasets.TextFileReader;
 
 import java.io.FileNotFoundException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static helpers.StandSortMerger.merge;
+import static helpers.StandSortHelperMethods.merge;
+import static helpers.StandSortHelperMethods.orderList;
 
 public class DoubleThreadedStrandSort extends Thread {
     public static <Integer extends Comparable<? super Integer>>
@@ -39,24 +39,6 @@ public class DoubleThreadedStrandSort extends Thread {
         output = merge(firstResultList.get(), secondResultList.get());
 
         return output;
-    }
-
-    private static void orderList(LinkedList<Integer> listPart, AtomicReference<LinkedList> resultList) {
-        while (listPart.size() > 0) {
-            LinkedList<Integer> subList = new LinkedList<>();
-
-            subList.add(listPart.removeFirst());
-
-            for (Iterator<Integer> it = listPart.iterator(); it.hasNext(); ) {
-                Integer elem = it.next();
-                if (subList.peekLast().compareTo(elem) <= 0) {
-                    subList.addLast(elem);
-                    it.remove();
-                }
-            }
-
-            resultList.set(merge(subList, resultList.get()));
-        }
     }
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {

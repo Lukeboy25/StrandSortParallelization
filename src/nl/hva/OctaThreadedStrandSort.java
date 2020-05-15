@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static helpers.PartitionLinkedList.partition;
-import static helpers.StandSortMerger.merge;
+import static helpers.StandSortHelperMethods.merge;
 
 public class OctaThreadedStrandSort extends Thread {
     public static <Integer extends Comparable<? super Integer>>
