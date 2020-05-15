@@ -3,66 +3,51 @@ package nl.hva;
 import datasets.TextFileReader;
 
 import java.io.FileNotFoundException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static helpers.PartitionLinkedList.partition;
 import static helpers.StandSortHelperMethods.merge;
 
 public class OctaThreadedStrandSort extends Thread {
+    private static final int NUMBER_OF_THREADS = 4;
+
     public static <Integer extends Comparable<? super Integer>>
     LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
-        List<List<Integer>> partitions = partition(list, list.size() / 4);
-        List<Integer> firstPart = partitions.get(0);
-        List<Integer> secondPart = partitions.get(1);
-        List<Integer> thirdPart = partitions.get(2);
-        List<Integer> fourthPart = partitions.get(3);
+        List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
         AtomicReference<LinkedList<Integer>> outputPartOneTwo = new AtomicReference<>(new LinkedList<>());
         AtomicReference<LinkedList<Integer>> outputPartThreeFour = new AtomicReference<>(new LinkedList<>());
         AtomicReference<LinkedList<Integer>> output = new AtomicReference<>(new LinkedList<>());
 
-        AtomicReference<LinkedList<Integer>> firstResultList = new AtomicReference<>(new LinkedList<>());
-        Thread firstThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)firstPart, (AtomicReference)firstResultList);
-        });
-        firstThread.start();
+        ArrayList<Thread> tasks = new ArrayList<>(NUMBER_OF_THREADS);
+        List<LinkedList<Integer>> listParts = new ArrayList<>(NUMBER_OF_THREADS);
 
-        AtomicReference<LinkedList<Integer>> secondResultList = new AtomicReference<>(new LinkedList<>());
-        Thread secondThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)secondPart, (AtomicReference)secondResultList);
-        });
-        secondThread.start();
-
-        AtomicReference<LinkedList<Integer>> thirdResultList = new AtomicReference<>(new LinkedList<>());
-        Thread thirdThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)thirdPart, (AtomicReference)thirdResultList);
-        });
-        thirdThread.start();
-
-        AtomicReference<LinkedList<Integer>> fourthResultList = new AtomicReference<>(new LinkedList<>());
-        Thread fourthThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)fourthPart, (AtomicReference)fourthResultList);
-        });
-        fourthThread.start();
+        for (int i = 0; i < NUMBER_OF_THREADS; i++) {
+            LinkedList<Integer> listPart = partitions.get(i);
+            AtomicReference<LinkedList<Integer>> resultList = new AtomicReference<>(new LinkedList<>());
+            tasks.add(new Thread(() -> {
+                orderList((LinkedList<java.lang.Integer>)listPart, (AtomicReference)resultList);
+            }));
+            tasks.get(i).start();
+            listParts.add(listPart);
+        }
 
         try {
-            firstThread.join();
-            secondThread.join();
+            tasks.get(0).join();
+            tasks.get(1).join();
 
             Thread fifthThread = new Thread(() -> {
-                outputPartOneTwo.set(merge(firstResultList.get(), secondResultList.get()));
+                outputPartOneTwo.set(merge(listParts.get(0), listParts.get(1)));
             });
             fifthThread.start();
 
-            thirdThread.join();
-            fourthThread.join();
+            tasks.get(2).join();
+            tasks.get(3).join();
 
             Thread sixthThread = new Thread(() -> {
-                outputPartThreeFour.set(merge(thirdResultList.get(), fourthResultList.get()));
+                outputPartThreeFour.set(merge(listParts.get(2), listParts.get(3)));
             });
             sixthThread.start();
 

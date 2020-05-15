@@ -17,7 +17,7 @@ public class FourThreadedStrandSort extends Thread {
     LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
-        List<List<Integer>> partitions = partition(list, list.size() / 4);
+        List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
         List<Integer> firstPart = partitions.get(0);
         List<Integer> secondPart = partitions.get(1);
         List<Integer> thirdPart = partitions.get(2);
