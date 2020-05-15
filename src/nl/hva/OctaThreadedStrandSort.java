@@ -52,33 +52,30 @@ public class OctaThreadedStrandSort extends Thread {
         try {
             firstThread.join();
             secondThread.join();
+
+            Thread fifthThread = new Thread(() -> {
+                outputPartOneTwo.set(merge(firstResultList.get(), secondResultList.get()));
+            });
+            fifthThread.start();
+
             thirdThread.join();
             fourthThread.join();
-        } catch (InterruptedException e) {
-            System.out.println("Main thread Interrupted");
-        }
 
-        Thread fifthThread = new Thread(() -> {
-            outputPartOneTwo.set(merge(firstResultList.get(), secondResultList.get()));
-        });
-        fifthThread.start();
+            Thread sixthThread = new Thread(() -> {
+                outputPartThreeFour.set(merge(thirdResultList.get(), fourthResultList.get()));
+            });
+            sixthThread.start();
 
-        Thread sixthThread = new Thread(() -> {
-            outputPartThreeFour.set(merge(thirdResultList.get(), fourthResultList.get()));
-        });
-        sixthThread.start();
-
-        try {
             fifthThread.join();
             sixthThread.join();
+
+            Thread seventhThread = new Thread(() -> {
+                output.set(merge(outputPartOneTwo.get(), outputPartThreeFour.get()));
+            });
+            seventhThread.start();
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
         }
-
-        Thread seventhThread = new Thread(() -> {
-            output.set(merge(outputPartOneTwo.get(), outputPartThreeFour.get()));
-        });
-        seventhThread.start();
 
         return output.get();
     }
