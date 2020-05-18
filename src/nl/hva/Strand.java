@@ -11,9 +11,9 @@ public class Strand {
     public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
-        LinkedList<Integer> result = new LinkedList<Integer>();
+        LinkedList<Integer> result = new LinkedList<>();
         while (list.size() > 0) {
-            LinkedList<Integer> sorted = new LinkedList<Integer>();
+            LinkedList<Integer> sorted = new LinkedList<>();
             sorted.add(list.removeFirst()); //same as remove() or remove(0)
             for (Iterator<Integer> it = list.iterator(); it.hasNext(); ) {
                 Integer elem = it.next();
