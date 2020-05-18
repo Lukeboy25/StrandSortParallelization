@@ -2,11 +2,10 @@ package helpers;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class StandSortHelperMethods {
     public static LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
-        LinkedList<Integer> result = new LinkedList<Integer>();
+        LinkedList<Integer> result = new LinkedList<>();
         while (!left.isEmpty() && !right.isEmpty()) {
             //change the direction of this comparison to change the direction of the sort
             if (left.peek().compareTo(right.peek()) <= 0)
@@ -19,10 +18,9 @@ public class StandSortHelperMethods {
         return result;
     }
 
-    public static void orderList(LinkedList<Integer> listPart, AtomicReference<LinkedList> resultList) {
+    public static void orderList(LinkedList<Integer> listPart, LinkedList<Integer> resultList) {
         while (listPart.size() > 0) {
             LinkedList<Integer> subList = new LinkedList<>();
-
             subList.add(listPart.removeFirst());
 
             for (Iterator<Integer> it = listPart.iterator(); it.hasNext(); ) {
@@ -33,7 +31,7 @@ public class StandSortHelperMethods {
                 }
             }
 
-            resultList.set(merge(subList, resultList.get()));
+            resultList = merge(subList, resultList);
         }
     }
 }

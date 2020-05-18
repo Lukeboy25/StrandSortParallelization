@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static helpers.PartitionLinkedList.partition;
 import static helpers.StandSortHelperMethods.merge;
+import static helpers.StandSortHelperMethods.orderList;
 
 public class OctaThreadedStrandSort extends Thread {
     private static final int NUMBER_OF_THREADS = 4;
@@ -25,9 +26,9 @@ public class OctaThreadedStrandSort extends Thread {
 
         for (int i = 0; i < NUMBER_OF_THREADS; i++) {
             LinkedList<Integer> listPart = partitions.get(i);
-            AtomicReference<LinkedList<Integer>> resultList = new AtomicReference<>(new LinkedList<>());
+            LinkedList<Integer> resultList = new LinkedList<>();
             tasks.add(new Thread(() -> {
-                orderList((LinkedList<java.lang.Integer>)listPart, (AtomicReference)resultList);
+                orderList(listPart, resultList);
             }));
             tasks.get(i).start();
             listParts.add(listPart);
@@ -62,24 +63,6 @@ public class OctaThreadedStrandSort extends Thread {
         }
 
         return output.get();
-    }
-
-    private static void orderList(LinkedList<Integer> listPart, AtomicReference<LinkedList> resultList) {
-        while (listPart.size() > 0) {
-            LinkedList<Integer> subList = new LinkedList<>();
-
-            subList.add(listPart.removeFirst());
-
-            for (Iterator<Integer> it = listPart.iterator(); it.hasNext(); ) {
-                Integer elem = it.next();
-                if (subList.peekLast().compareTo(elem) <= 0) {
-                    subList.addLast(elem);
-                    it.remove();
-                }
-            }
-
-            resultList.set(merge(subList, resultList.get()));
-        }
     }
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {

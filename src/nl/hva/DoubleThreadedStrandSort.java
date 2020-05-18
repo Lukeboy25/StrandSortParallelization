@@ -3,7 +3,9 @@ package nl.hva;
 import datasets.TextFileReader;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static helpers.StandSortHelperMethods.merge;
@@ -17,15 +19,15 @@ public class DoubleThreadedStrandSort extends Thread {
         LinkedList<Integer> secondPart = new LinkedList<>(list.subList((list.size() + 1) / 2, list.size()));
         LinkedList<Integer> output;
 
-        AtomicReference<LinkedList<Integer>> firstResultList = new AtomicReference<>(new LinkedList<>());
+        LinkedList<Integer> firstResultList = new LinkedList<>();
         Thread firstThread = new Thread(() -> {
-            orderList(firstPart, (AtomicReference)firstResultList);
+            orderList(firstPart, firstResultList);
         });
         firstThread.start();
 
-        AtomicReference<LinkedList<Integer>> secondResultList = new AtomicReference<>(new LinkedList<>());
+        LinkedList<Integer> secondResultList = new LinkedList<>();
         Thread secondThread = new Thread(() -> {
-            orderList(secondPart, (AtomicReference)secondResultList);
+            orderList(secondPart, secondResultList);
         });
         secondThread.start();
 
@@ -35,7 +37,7 @@ public class DoubleThreadedStrandSort extends Thread {
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
         }
-        output = merge(firstResultList.get(), secondResultList.get());
+        output = merge(firstResultList, secondResultList);
 
         return output;
     }

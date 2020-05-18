@@ -30,7 +30,7 @@ public class Strand {
 
     public static <Integer extends Comparable<? super Integer>>
     LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
-        LinkedList<Integer> result = new LinkedList<Integer>();
+        LinkedList<Integer> result = new LinkedList<>();
         while (!left.isEmpty() && !right.isEmpty()) {
             //change the direction of this comparison to change the direction of the sort
             if (left.peek().compareTo(right.peek()) <= 0)
@@ -45,10 +45,10 @@ public class Strand {
 
     public static void main(String[] args) throws FileNotFoundException {
         TextFileReader dataset = new TextFileReader();
-        LinkedList<Integer> smallestList = (LinkedList<Integer>) dataset.readFile("src/datasets/smallestDataSet.txt");
-        LinkedList<Integer> middleList = (LinkedList<Integer>) dataset.readFile("src/datasets/middleDataSet.txt");
-        LinkedList<Integer> bigList = (LinkedList<Integer>) dataset.readFile("src/datasets/bigDataSet.txt");
-        LinkedList<Integer> biggestList = (LinkedList<Integer>) dataset.readFile("src/datasets/biggestDataSet.txt");
+        LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
+        LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
+        LinkedList<Integer> bigList = dataset.readFile("src/datasets/bigDataSet.txt");
+        LinkedList<Integer> biggestList = dataset.readFile("src/datasets/biggestDataSet.txt");
         long start = 0;
 
         start = System.currentTimeMillis();

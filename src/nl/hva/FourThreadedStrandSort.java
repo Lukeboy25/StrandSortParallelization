@@ -25,27 +25,27 @@ public class FourThreadedStrandSort extends Thread {
         LinkedList<Integer> outputPartThreeFour;
         LinkedList<Integer> output;
 
-        AtomicReference<LinkedList<Integer>> firstResultList = new AtomicReference<>(new LinkedList<>());
+        LinkedList<Integer> firstResultList = new LinkedList<>();
         Thread firstThread = new Thread(() -> {
-            orderList(firstPart, (AtomicReference)firstResultList);
+            orderList(firstPart, firstResultList);
         });
         firstThread.start();
 
-        AtomicReference<LinkedList<Integer>> secondResultList = new AtomicReference<>(new LinkedList<>());
+        LinkedList<Integer> secondResultList = new LinkedList<>();
         Thread secondThread = new Thread(() -> {
-            orderList(secondPart, (AtomicReference)secondResultList);
+            orderList(secondPart, secondResultList);
         });
         secondThread.start();
 
-        AtomicReference<LinkedList<Integer>> thirdResultList = new AtomicReference<>(new LinkedList<>());
+        LinkedList<Integer> thirdResultList = new LinkedList<>();
         Thread thirdThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)thirdPart, (AtomicReference)thirdResultList);
+            orderList(thirdPart, thirdResultList);
         });
         thirdThread.start();
 
-        AtomicReference<LinkedList<Integer>> fourthResultList = new AtomicReference<>(new LinkedList<>());
+        LinkedList<Integer> fourthResultList = new LinkedList<>();
         Thread fourthThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)fourthPart, (AtomicReference)fourthResultList);
+            orderList(fourthPart, fourthResultList);
         });
         fourthThread.start();
 
@@ -58,8 +58,8 @@ public class FourThreadedStrandSort extends Thread {
             System.out.println("Main thread Interrupted");
         }
 
-        outputPartOneTwo = merge(firstResultList.get(), secondResultList.get());
-        outputPartThreeFour = merge(thirdResultList.get(), fourthResultList.get());
+        outputPartOneTwo = merge(firstResultList, secondResultList);
+        outputPartThreeFour = merge(thirdResultList, fourthResultList);
         output = merge(outputPartOneTwo, outputPartThreeFour);
 
         return output;
