@@ -8,8 +8,7 @@ import java.util.LinkedList;
 
 public class Strand {
     // note: the input list is destroyed
-    public static <Integer extends Comparable<? super Integer>>
-    LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         LinkedList<Integer> result = new LinkedList<Integer>();
@@ -28,8 +27,7 @@ public class Strand {
         return result;
     }
 
-    public static <Integer extends Comparable<? super Integer>>
-    LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
+    public static LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
         LinkedList<Integer> result = new LinkedList<>();
         while (!left.isEmpty() && !right.isEmpty()) {
             //change the direction of this comparison to change the direction of the sort
