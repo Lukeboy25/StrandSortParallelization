@@ -3,10 +3,7 @@ package nl.hva;
 import datasets.TextFileReader;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static helpers.StandSortHelperMethods.merge;
 import static helpers.StandSortHelperMethods.orderList;

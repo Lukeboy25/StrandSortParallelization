@@ -9,10 +9,10 @@ import java.util.LinkedList;
 public class StrandSortUnitTest  {
 
     private TextFileReader dataset = new TextFileReader();
-    private LinkedList<Integer> smallestList = (LinkedList<Integer>) dataset.readFile("src/datasets/smallestDataSet.txt");
-    private LinkedList<Integer> middleList = (LinkedList<Integer>) dataset.readFile("src/datasets/middleDataSet.txt");
-    private LinkedList<Integer> bigList = (LinkedList<Integer>) dataset.readFile("src/datasets/bigDataSet.txt");
-    private LinkedList<Integer> biggestList = (LinkedList<Integer>) dataset.readFile("src/datasets/biggestDataSet.txt");
+    private LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
+    private LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
+    private LinkedList<Integer> bigList = dataset.readFile("src/datasets/bigDataSet.txt");
+    private LinkedList<Integer> biggestList = dataset.readFile("src/datasets/biggestDataSet.txt");
     private int beginSize = 0;
 
     public StrandSortUnitTest() throws FileNotFoundException {
