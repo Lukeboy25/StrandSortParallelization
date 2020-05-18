@@ -13,28 +13,27 @@ import static helpers.PartitionLinkedList.partition;
 import static helpers.StandSortHelperMethods.merge;
 
 public class FourThreadedStrandSort extends Thread {
-    public static <Integer extends Comparable<? super Integer>>
-    LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
-        List<Integer> firstPart = partitions.get(0);
-        List<Integer> secondPart = partitions.get(1);
-        List<Integer> thirdPart = partitions.get(2);
-        List<Integer> fourthPart = partitions.get(3);
+        LinkedList<Integer> firstPart = partitions.get(0);
+        LinkedList<Integer> secondPart = partitions.get(1);
+        LinkedList<Integer> thirdPart = partitions.get(2);
+        LinkedList<Integer> fourthPart = partitions.get(3);
         LinkedList<Integer> outputPartOneTwo;
         LinkedList<Integer> outputPartThreeFour;
         LinkedList<Integer> output;
 
         AtomicReference<LinkedList<Integer>> firstResultList = new AtomicReference<>(new LinkedList<>());
         Thread firstThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)firstPart, (AtomicReference)firstResultList);
+            orderList(firstPart, (AtomicReference)firstResultList);
         });
         firstThread.start();
 
         AtomicReference<LinkedList<Integer>> secondResultList = new AtomicReference<>(new LinkedList<>());
         Thread secondThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)secondPart, (AtomicReference)secondResultList);
+            orderList(secondPart, (AtomicReference)secondResultList);
         });
         secondThread.start();
 

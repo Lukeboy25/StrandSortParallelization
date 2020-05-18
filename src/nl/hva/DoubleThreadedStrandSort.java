@@ -10,8 +10,7 @@ import static helpers.StandSortHelperMethods.merge;
 import static helpers.StandSortHelperMethods.orderList;
 
 public class DoubleThreadedStrandSort extends Thread {
-    public static <Integer extends Comparable<? super Integer>>
-    LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         LinkedList<Integer> firstPart = new LinkedList<>(list.subList(0, (list.size() + 1) / 2));
@@ -20,13 +19,13 @@ public class DoubleThreadedStrandSort extends Thread {
 
         AtomicReference<LinkedList<Integer>> firstResultList = new AtomicReference<>(new LinkedList<>());
         Thread firstThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)firstPart, (AtomicReference)firstResultList);
+            orderList(firstPart, (AtomicReference)firstResultList);
         });
         firstThread.start();
 
         AtomicReference<LinkedList<Integer>> secondResultList = new AtomicReference<>(new LinkedList<>());
         Thread secondThread = new Thread(() -> {
-            orderList((LinkedList<java.lang.Integer>)secondPart, (AtomicReference)secondResultList);
+            orderList(secondPart, (AtomicReference)secondResultList);
         });
         secondThread.start();
 

@@ -12,8 +12,7 @@ import static helpers.StandSortHelperMethods.merge;
 public class OctaThreadedStrandSort extends Thread {
     private static final int NUMBER_OF_THREADS = 4;
 
-    public static <Integer extends Comparable<? super Integer>>
-    LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
