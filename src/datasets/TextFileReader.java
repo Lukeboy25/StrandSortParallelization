@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TextFileReader {
-    public List<Integer> readFile(String filePath) throws FileNotFoundException {
+    public LinkedList<Integer> readFile(String filePath) throws FileNotFoundException {
         Scanner s = new Scanner(new File(filePath));
         LinkedList<Integer> list = new LinkedList<Integer>();
         while (s.hasNext()) {

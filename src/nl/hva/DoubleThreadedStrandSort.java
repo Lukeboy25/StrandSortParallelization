@@ -42,10 +42,10 @@ public class DoubleThreadedStrandSort extends Thread {
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         TextFileReader reader = new TextFileReader();
-        LinkedList<Integer> smallestList = (LinkedList<Integer>) reader.readFile("src/datasets/smallestDataSet.txt");
-        LinkedList<Integer> middleList = (LinkedList<Integer>) reader.readFile("src/datasets/middleDataSet.txt");
-        LinkedList<Integer> bigList = (LinkedList<Integer>) reader.readFile("src/datasets/bigDataSet.txt");
-        LinkedList<Integer> biggestList = (LinkedList<Integer>) reader.readFile("src/datasets/biggestDataSet.txt");
+        LinkedList<Integer> smallestList = reader.readFile("src/datasets/smallestDataSet.txt");
+        LinkedList<Integer> middleList = reader.readFile("src/datasets/middleDataSet.txt");
+        LinkedList<Integer> bigList = reader.readFile("src/datasets/bigDataSet.txt");
+        LinkedList<Integer> biggestList = reader.readFile("src/datasets/biggestDataSet.txt");
         long start;
 
         start = System.currentTimeMillis();
