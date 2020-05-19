@@ -1,3 +1,4 @@
+import com.sun.net.httpserver.Authenticator;
 import datasets.TextFileReader;
 import nl.hva.Strand;
 import org.junit.jupiter.api.Test;
@@ -22,14 +23,11 @@ public class StrandSortUnitTest {
     public StrandSortUnitTest() throws FileNotFoundException {}
 
     @Test
-    public void DataSetIsSortedAscending() {
+    public void StrandSortResultIsSameAsDefaultCollectionSort() {
         Collections.sort(biggestJavaSortedInputList);
         LinkedList<Integer> resultList = Strand.strandSort(biggestList);
-        if (isArraySortedAscending(resultList) && resultList.equals(biggestJavaSortedInputList)) {
-            assertTrue(true);
-        } else {
-            fail();
-        }
+
+        assertEquals(resultList.equals(biggestJavaSortedInputList), true);
     }
 
     //Ascending tests
@@ -48,6 +46,12 @@ public class StrandSortUnitTest {
     @Test
     public void BigDataSetIsSortedAscending() {
         LinkedList<Integer> resultList = Strand.strandSort(bigList);
+        assertTrue(isArraySortedAscending(resultList));
+    }
+
+    @Test
+    public void BiggestDataSetIsSortedAscending() {
+        LinkedList<Integer> resultList = Strand.strandSort(biggestList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
