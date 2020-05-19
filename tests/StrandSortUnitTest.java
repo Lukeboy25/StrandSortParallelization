@@ -1,12 +1,14 @@
 import datasets.TextFileReader;
 import nl.hva.Strand;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.LinkedList;
 
-public class StrandSortUnitTest  {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class StrandSortUnitTest {
 
     private TextFileReader dataset = new TextFileReader();
     private LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
@@ -15,7 +17,19 @@ public class StrandSortUnitTest  {
     private LinkedList<Integer> biggestList = dataset.readFile("src/datasets/biggestDataSet.txt");
     private int beginSize = 0;
 
-    public StrandSortUnitTest() throws FileNotFoundException {
+    private LinkedList<Integer> biggestJavaSortedInputList = new LinkedList<>(biggestList);
+
+    public StrandSortUnitTest() throws FileNotFoundException {}
+
+    @Test
+    public void DataSetIsSortedAscending() {
+        Collections.sort(biggestJavaSortedInputList);
+        LinkedList<Integer> resultList = Strand.strandSort(biggestList);
+        if (isArraySortedAscending(resultList) && resultList.equals(biggestJavaSortedInputList)) {
+            assertTrue(true);
+        } else {
+            fail();
+        }
     }
 
     //Ascending tests
@@ -34,12 +48,6 @@ public class StrandSortUnitTest  {
     @Test
     public void BigDataSetIsSortedAscending() {
         LinkedList<Integer> resultList = Strand.strandSort(bigList);
-        assertTrue(isArraySortedAscending(resultList));
-    }
-
-    @Test
-    public void DataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = Strand.strandSort(biggestList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
@@ -72,7 +80,7 @@ public class StrandSortUnitTest  {
         assertEquals(resultList.size(), beginSize);
     }
 
-    private boolean isArraySortedAscending(LinkedList<Integer> linkedList){
+    private boolean isArraySortedAscending(LinkedList<Integer> linkedList) {
         Integer[] array = new Integer[linkedList.size()];
         array = linkedList.toArray(array);
 
