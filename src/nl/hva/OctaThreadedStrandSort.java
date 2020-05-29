@@ -4,65 +4,137 @@ import datasets.TextFileReader;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static helpers.PartitionLinkedList.partition;
 import static helpers.StandSortHelperMethods.merge;
 import static helpers.StandSortHelperMethods.orderList;
 
 public class OctaThreadedStrandSort extends Thread {
-    private static final int NUMBER_OF_THREADS = 4;
+    private static final int NUMBER_OF_THREADS = 8;
+
+    private static volatile LinkedList<Integer> outputPartOneTwo;
+    private static volatile LinkedList<Integer> outputPartThreeFour;
+    private static volatile LinkedList<Integer> outputPartFiveSix;
+    private static volatile LinkedList<Integer> outputPartSevenEight;
+    private static volatile LinkedList<Integer> outputPartOneTwoThreeFour;
+    private static volatile LinkedList<Integer> outputPartFiveSixSevenEight;
+    private static volatile LinkedList<Integer> output = new LinkedList<>();
+
+    private static volatile LinkedList<Integer>[] resultListParts = new LinkedList[NUMBER_OF_THREADS];
 
     public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
-        List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
-        AtomicReference<LinkedList<Integer>> outputPartOneTwo = new AtomicReference<>(new LinkedList<>());
-        AtomicReference<LinkedList<Integer>> outputPartThreeFour = new AtomicReference<>(new LinkedList<>());
-        AtomicReference<LinkedList<Integer>> output = new AtomicReference<>(new LinkedList<>());
+        outputPartOneTwo = new LinkedList<>();
+        outputPartThreeFour = new LinkedList<>();
+        outputPartFiveSix = new LinkedList<>();
+        outputPartSevenEight = new LinkedList<>();
+        outputPartOneTwoThreeFour = new LinkedList<>();
+        outputPartFiveSixSevenEight = new LinkedList<>();
 
+        List<LinkedList<Integer>> partitions = partition(list, list.size() / NUMBER_OF_THREADS);
         ArrayList<Thread> tasks = new ArrayList<>(NUMBER_OF_THREADS);
-        List<LinkedList<Integer>> listParts = new ArrayList<>(NUMBER_OF_THREADS);
 
         for (int i = 0; i < NUMBER_OF_THREADS; i++) {
+            int counter = i;
             LinkedList<Integer> listPart = partitions.get(i);
-            LinkedList<Integer> resultList = new LinkedList<>();
-            tasks.add(new Thread(() -> {
-                orderList(listPart, resultList);
-            }));
+            resultListParts[i] = new LinkedList<>();
+
+            tasks.add(new Thread(() -> resultListParts[counter] = orderList(listPart, resultListParts[counter])));
             tasks.get(i).start();
-            listParts.add(listPart);
         }
 
         try {
-            tasks.get(0).join();
-            tasks.get(1).join();
+            Thread firstThread = tasks.get(0);
+            Thread secondThread = tasks.get(1);
+            firstThread.join();
+            secondThread.join();
 
-            Thread fifthThread = new Thread(() -> {
-                outputPartOneTwo.set(merge(listParts.get(0), listParts.get(1)));
-            });
-            fifthThread.start();
+            if (!firstThread.isAlive() && !secondThread.isAlive()) {
+                firstThread = new Thread(() -> {
+                    outputPartOneTwo = merge(resultListParts[0], resultListParts[1]);
+                });
+                firstThread.start();
+            }
 
-            tasks.get(2).join();
-            tasks.get(3).join();
+            Thread thirdThread = tasks.get(2);
+            Thread fourthThread = tasks.get(3);
+            thirdThread.join();
+            fourthThread.join();
 
-            Thread sixthThread = new Thread(() -> {
-                outputPartThreeFour.set(merge(listParts.get(2), listParts.get(3)));
-            });
-            sixthThread.start();
+            if (!thirdThread.isAlive() && !fourthThread.isAlive()) {
+                thirdThread = new Thread(() -> {
+                    outputPartThreeFour = merge(resultListParts[2], resultListParts[3]);
+                });
+                thirdThread.start();
+            }
 
+            Thread fifthThread = tasks.get(4);
+            Thread sixthThread = tasks.get(5);
             fifthThread.join();
             sixthThread.join();
 
-            Thread seventhThread = new Thread(() -> {
-                output.set(merge(outputPartOneTwo.get(), outputPartThreeFour.get()));
-            });
-            seventhThread.start();
+            if (!fifthThread.isAlive() && !sixthThread.isAlive()) {
+                fifthThread = new Thread(() -> {
+                    outputPartFiveSix = merge(resultListParts[4], resultListParts[5]);
+                });
+                fifthThread.start();
+            }
+
+            Thread seventhThread = tasks.get(6);
+            Thread eightThread = tasks.get(7);
+            seventhThread.join();
+            eightThread.join();
+
+            if (!seventhThread.isAlive() && !eightThread.isAlive()) {
+                seventhThread = new Thread(() -> {
+                    outputPartSevenEight = merge(resultListParts[6], resultListParts[7]);
+                });
+                seventhThread.start();
+            }
+
+            try {
+                firstThread.join();
+                thirdThread.join();
+            } catch (InterruptedException e) {
+                System.out.println("First-Four thread Interrupted");
+            }
+
+            if (!firstThread.isAlive() && !thirdThread.isAlive()) {
+                firstThread = new Thread(() -> {
+                    outputPartOneTwoThreeFour = merge(outputPartOneTwo, outputPartThreeFour);
+                });
+                firstThread.start();
+            }
+
+            try {
+                fifthThread.join();
+                seventhThread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Fifth-Eight thread Interrupted");
+            }
+
+            if (!fifthThread.isAlive() && !seventhThread.isAlive()) {
+                fifthThread = new Thread(() -> {
+                    outputPartFiveSixSevenEight = merge(outputPartFiveSix, outputPartSevenEight);
+                });
+                fifthThread.start();
+            }
+
+            try {
+                firstThread.join();
+                fifthThread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Fifth-Eight thread Interrupted");
+            }
+
+            output = merge(outputPartOneTwoThreeFour, outputPartFiveSixSevenEight);
+
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
         }
 
-        return output.get();
+        return output;
     }
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
@@ -76,7 +148,6 @@ public class OctaThreadedStrandSort extends Thread {
         start = System.currentTimeMillis();
         strandSort(smallestList);
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - start));
-
 
         start = System.currentTimeMillis();
         strandSort(middleList);
