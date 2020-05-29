@@ -77,6 +77,7 @@ public class OctaThreadedStrandSort extends Thread {
         strandSort(smallestList);
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - start));
 
+
         start = System.currentTimeMillis();
         strandSort(middleList);
         System.out.println("Sorting time for 10.000 in milliseconds: " + (System.currentTimeMillis() - start));
