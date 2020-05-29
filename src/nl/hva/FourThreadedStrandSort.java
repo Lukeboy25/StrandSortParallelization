@@ -3,7 +3,6 @@ package nl.hva;
 import datasets.TextFileReader;
 
 import java.io.FileNotFoundException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -13,6 +12,15 @@ import static helpers.PartitionLinkedList.partition;
 import static helpers.StandSortHelperMethods.merge;
 
 public class FourThreadedStrandSort extends Thread {
+
+    private static volatile LinkedList<Integer> outputPartOneTwo;
+    private static volatile LinkedList<Integer> outputPartThreeFour;
+
+    private static LinkedList<Integer> firstResultList;
+    private static LinkedList<Integer> secondResultList;
+    private static LinkedList<Integer> thirdResultList;
+    private static LinkedList<Integer> fourthResultList;
+
     public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
@@ -29,8 +37,6 @@ public class FourThreadedStrandSort extends Thread {
         LinkedList<Integer> secondPart = partitions.get(1);
         LinkedList<Integer> thirdPart = partitions.get(2);
         LinkedList<Integer> fourthPart = partitions.get(3);
-        LinkedList<Integer> outputPartOneTwo;
-        LinkedList<Integer> outputPartThreeFour;
         LinkedList<Integer> output;
 
         Thread firstThread = new Thread(() -> {
@@ -62,8 +68,27 @@ public class FourThreadedStrandSort extends Thread {
             System.out.println("Main thread Interrupted");
         }
 
-        outputPartOneTwo = merge(firstResultList, secondResultList);
-        outputPartThreeFour = merge(thirdResultList, fourthResultList);
+        if (!firstThread.isAlive() && !secondThread.isAlive()) {
+            firstThread = new Thread(() -> {
+                outputPartOneTwo = merge(firstResultList, secondResultList);
+            });
+            firstThread.start();
+        }
+
+        if (!thirdThread.isAlive() && !fourthThread.isAlive()) {
+            thirdThread = new Thread(() -> {
+                outputPartThreeFour = merge(thirdResultList, fourthResultList);
+            });
+            thirdThread.start();
+        }
+
+        try {
+            firstThread.join();
+            thirdThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Merge thread Interrupted");
+        }
+
         output = merge(outputPartOneTwo, outputPartThreeFour);
 
         return output;
