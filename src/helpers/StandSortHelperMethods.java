@@ -18,7 +18,7 @@ public class StandSortHelperMethods {
         return result;
     }
 
-    public static void orderList(LinkedList<Integer> listPart, LinkedList<Integer> resultList) {
+    public static LinkedList<Integer> orderList(LinkedList<Integer> listPart, LinkedList<Integer> resultList) {
         while (listPart.size() > 0) {
             LinkedList<Integer> subList = new LinkedList<>();
             subList.add(listPart.removeFirst());
@@ -33,5 +33,7 @@ public class StandSortHelperMethods {
 
             resultList = merge(subList, resultList);
         }
+
+        return resultList;
     }
 }
