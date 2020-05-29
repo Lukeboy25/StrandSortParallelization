@@ -9,22 +9,26 @@ import static helpers.StandSortHelperMethods.merge;
 import static helpers.StandSortHelperMethods.orderList;
 
 public class DoubleThreadedStrandSort extends Thread {
+
+    private static volatile LinkedList<Integer> firstResultList;
+    private static volatile LinkedList<Integer> secondResultList;
+
     public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
+        firstResultList = new LinkedList<>();
+        secondResultList = new LinkedList<>();
         LinkedList<Integer> firstPart = new LinkedList<>(list.subList(0, (list.size() + 1) / 2));
         LinkedList<Integer> secondPart = new LinkedList<>(list.subList((list.size() + 1) / 2, list.size()));
         LinkedList<Integer> output;
 
-        LinkedList<Integer> firstResultList = new LinkedList<>();
         Thread firstThread = new Thread(() -> {
-            orderList(firstPart, firstResultList);
+            firstResultList = orderList(firstPart, firstResultList);
         });
         firstThread.start();
 
-        LinkedList<Integer> secondResultList = new LinkedList<>();
         Thread secondThread = new Thread(() -> {
-            orderList(secondPart, secondResultList);
+            secondResultList = orderList(secondPart, secondResultList);
         });
         secondThread.start();
 
