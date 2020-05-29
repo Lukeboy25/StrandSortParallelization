@@ -16,6 +16,14 @@ public class FourThreadedStrandSort extends Thread {
     public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
+        outputPartOneTwo = new LinkedList<>();
+        outputPartThreeFour = new LinkedList<>();
+
+        firstResultList = new LinkedList<>();
+        secondResultList = new LinkedList<>();
+        thirdResultList = new LinkedList<>();
+        fourthResultList = new LinkedList<>();
+
         List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
         LinkedList<Integer> firstPart = partitions.get(0);
         LinkedList<Integer> secondPart = partitions.get(1);
@@ -25,27 +33,23 @@ public class FourThreadedStrandSort extends Thread {
         LinkedList<Integer> outputPartThreeFour;
         LinkedList<Integer> output;
 
-        LinkedList<Integer> firstResultList = new LinkedList<>();
         Thread firstThread = new Thread(() -> {
-            orderList(firstPart, firstResultList);
+            firstResultList = orderList(firstPart, firstResultList);
         });
         firstThread.start();
 
-        LinkedList<Integer> secondResultList = new LinkedList<>();
         Thread secondThread = new Thread(() -> {
-            orderList(secondPart, secondResultList);
+            secondResultList = orderList(secondPart, secondResultList);
         });
         secondThread.start();
 
-        LinkedList<Integer> thirdResultList = new LinkedList<>();
         Thread thirdThread = new Thread(() -> {
-            orderList(thirdPart, thirdResultList);
+            thirdResultList = orderList(thirdPart, thirdResultList);
         });
         thirdThread.start();
 
-        LinkedList<Integer> fourthResultList = new LinkedList<>();
         Thread fourthThread = new Thread(() -> {
-            orderList(fourthPart, fourthResultList);
+            fourthResultList = orderList(fourthPart, fourthResultList);
         });
         fourthThread.start();
 
