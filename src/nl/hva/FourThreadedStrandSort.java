@@ -62,33 +62,30 @@ public class FourThreadedStrandSort extends Thread {
         try {
             firstThread.join();
             secondThread.join();
+
+            if (!firstThread.isAlive() && !secondThread.isAlive()) {
+                firstThread = new Thread(() -> {
+                    outputPartOneTwo = merge(firstResultList, secondResultList);
+                });
+                firstThread.start();
+            }
+
             thirdThread.join();
             fourthThread.join();
+
+            if (!thirdThread.isAlive() && !fourthThread.isAlive()) {
+                thirdThread = new Thread(() -> {
+                    outputPartThreeFour = merge(thirdResultList, fourthResultList);
+                });
+                thirdThread.start();
+            }
+
+            firstThread.join();
+            thirdThread.join();
+
         } catch (InterruptedException e) {
             System.out.println("Main thread Interrupted");
         }
-
-        if (!firstThread.isAlive() && !secondThread.isAlive()) {
-            firstThread = new Thread(() -> {
-                outputPartOneTwo = merge(firstResultList, secondResultList);
-            });
-            firstThread.start();
-        }
-
-        if (!thirdThread.isAlive() && !fourthThread.isAlive()) {
-            thirdThread = new Thread(() -> {
-                outputPartThreeFour = merge(thirdResultList, fourthResultList);
-            });
-            thirdThread.start();
-        }
-
-        try {
-            firstThread.join();
-            thirdThread.join();
-        } catch (InterruptedException e) {
-            System.out.println("Merge thread Interrupted");
-        }
-
         output = merge(outputPartOneTwo, outputPartThreeFour);
 
         return output;

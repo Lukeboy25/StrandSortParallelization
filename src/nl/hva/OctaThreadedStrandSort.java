@@ -93,12 +93,8 @@ public class OctaThreadedStrandSort extends Thread {
                 seventhThread.start();
             }
 
-            try {
-                firstThread.join();
-                thirdThread.join();
-            } catch (InterruptedException e) {
-                System.out.println("First-Four thread Interrupted");
-            }
+            firstThread.join();
+            thirdThread.join();
 
             if (!firstThread.isAlive() && !thirdThread.isAlive()) {
                 firstThread = new Thread(() -> {
@@ -107,12 +103,8 @@ public class OctaThreadedStrandSort extends Thread {
                 firstThread.start();
             }
 
-            try {
-                fifthThread.join();
-                seventhThread.join();
-            } catch (InterruptedException e) {
-                System.out.println("Fifth-Eight thread Interrupted");
-            }
+            fifthThread.join();
+            seventhThread.join();
 
             if (!fifthThread.isAlive() && !seventhThread.isAlive()) {
                 fifthThread = new Thread(() -> {
@@ -121,12 +113,8 @@ public class OctaThreadedStrandSort extends Thread {
                 fifthThread.start();
             }
 
-            try {
-                firstThread.join();
-                fifthThread.join();
-            } catch (InterruptedException e) {
-                System.out.println("Fifth-Eight thread Interrupted");
-            }
+            firstThread.join();
+            fifthThread.join();
 
             output = merge(outputPartOneTwoThreeFour, outputPartFiveSixSevenEight);
 
