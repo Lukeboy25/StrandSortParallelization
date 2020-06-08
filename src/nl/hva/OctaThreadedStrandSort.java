@@ -7,19 +7,19 @@ import static helpers.StrandSortHelperMethods.merge;
 import static helpers.StrandSortHelperMethods.orderList;
 
 public class OctaThreadedStrandSort extends Thread {
-    private static final int NUMBER_OF_THREADS = 8;
+    private final int NUMBER_OF_THREADS = 8;
 
-    private static volatile LinkedList<Integer> outputPartOneTwo;
-    private static volatile LinkedList<Integer> outputPartThreeFour;
-    private static volatile LinkedList<Integer> outputPartFiveSix;
-    private static volatile LinkedList<Integer> outputPartSevenEight;
-    private static volatile LinkedList<Integer> outputPartOneTwoThreeFour;
-    private static volatile LinkedList<Integer> outputPartFiveSixSevenEight;
-    private static volatile LinkedList<Integer> output = new LinkedList<>();
+    private volatile LinkedList<Integer> outputPartOneTwo;
+    private volatile LinkedList<Integer> outputPartThreeFour;
+    private volatile LinkedList<Integer> outputPartFiveSix;
+    private volatile LinkedList<Integer> outputPartSevenEight;
+    private volatile LinkedList<Integer> outputPartOneTwoThreeFour;
+    private volatile LinkedList<Integer> outputPartFiveSixSevenEight;
+    private volatile LinkedList<Integer> output = new LinkedList<>();
 
-    private static volatile LinkedList<Integer>[] resultListParts = new LinkedList[NUMBER_OF_THREADS];
+    private  volatile LinkedList<Integer>[] resultListParts = new LinkedList[NUMBER_OF_THREADS];
 
-    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public  LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         outputPartOneTwo = new LinkedList<>();

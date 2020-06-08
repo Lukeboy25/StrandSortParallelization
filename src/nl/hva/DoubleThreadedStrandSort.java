@@ -7,10 +7,10 @@ import static helpers.StrandSortHelperMethods.orderList;
 
 public class DoubleThreadedStrandSort extends Thread {
 
-    private static LinkedList<Integer> firstResultList;
-    private static LinkedList<Integer> secondResultList;
+    private LinkedList<Integer> firstResultList;
+    private LinkedList<Integer> secondResultList;
 
-    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         firstResultList = new LinkedList<>();

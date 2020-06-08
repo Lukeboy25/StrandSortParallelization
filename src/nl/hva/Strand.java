@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class Strand {
     // note: the input list is destroyed
-    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         LinkedList<Integer> result = new LinkedList<Integer>();

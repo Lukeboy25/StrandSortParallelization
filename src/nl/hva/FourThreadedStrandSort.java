@@ -9,15 +9,15 @@ import static helpers.StrandSortHelperMethods.merge;
 
 public class FourThreadedStrandSort extends Thread {
 
-    private static volatile LinkedList<Integer> outputPartOneTwo;
-    private static volatile LinkedList<Integer> outputPartThreeFour;
+    private volatile LinkedList<Integer> outputPartOneTwo;
+    private volatile LinkedList<Integer> outputPartThreeFour;
 
-    private static LinkedList<Integer> firstResultList;
-    private static LinkedList<Integer> secondResultList;
-    private static LinkedList<Integer> thirdResultList;
-    private static LinkedList<Integer> fourthResultList;
+    private LinkedList<Integer> firstResultList;
+    private LinkedList<Integer> secondResultList;
+    private LinkedList<Integer> thirdResultList;
+    private LinkedList<Integer> fourthResultList;
 
-    public static LinkedList<Integer> strandSort(LinkedList<Integer> list) {
+    public LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
 
         outputPartOneTwo = new LinkedList<>();
