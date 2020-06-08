@@ -24,72 +24,72 @@ class ProducerConsumerSortUnitTest {
     @Test
     public void StrandSortResultIsSameAsDefaultCollectionSort() throws InterruptedException {
         Collections.sort(biggestJavaSortedInputList);
-        LinkedList<Integer> produceList = producerConsumer.produce(biggestJavaSortedInputList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
+        producerConsumer.produce(biggestJavaSortedInputList);
+        producerConsumer.consume();
 
-        assertEquals(consumeList, biggestJavaSortedInputList);
+        assertEquals(producerConsumer.resultList, biggestJavaSortedInputList);
     }
 
     //Ascending tests
     @Test
     public void SmallDataSetIsSortedAscending() throws InterruptedException {
-        LinkedList<Integer> produceList = producerConsumer.produce(smallestList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertTrue(isArraySortedAscending(consumeList));
+        producerConsumer.produce(smallestList);
+        producerConsumer.consume();
+        assertTrue(isArraySortedAscending(producerConsumer.resultList));
     }
 
     @Test
     public void MediumSetIsSortedAscending() throws InterruptedException {
-        LinkedList<Integer> produceList = producerConsumer.produce(middleList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertTrue(isArraySortedAscending(consumeList));
+        producerConsumer.produce(middleList);
+        producerConsumer.consume();
+        assertTrue(isArraySortedAscending(producerConsumer.resultList));
     }
 
     @Test
     public void BigDataSetIsSortedAscending() throws InterruptedException {
-        LinkedList<Integer> produceList = producerConsumer.produce(bigList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertTrue(isArraySortedAscending(consumeList));
+        producerConsumer.produce(bigList);
+        producerConsumer.consume();
+        assertTrue(isArraySortedAscending(producerConsumer.resultList));
     }
 
     @Test
     public void BiggestDataSetIsSortedAscending() throws InterruptedException {
-        LinkedList<Integer> produceList = producerConsumer.produce(biggestList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertTrue(isArraySortedAscending(consumeList));
+        producerConsumer.produce(biggestList);
+        producerConsumer.consume();
+        assertTrue(isArraySortedAscending(producerConsumer.resultList));
     }
 
     // Size tests
     @Test
     public void SmallDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = smallestList.size();
-        LinkedList<Integer> produceList = producerConsumer.produce(smallestList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertEquals(beginSize, consumeList.size());
+        producerConsumer.produce(smallestList);
+        producerConsumer.consume();
+        assertEquals(beginSize, producerConsumer.resultList.size());
     }
 
     @Test
     public void MediumDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = middleList.size();
-        LinkedList<Integer> produceList = producerConsumer.produce(middleList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertEquals(beginSize, consumeList.size());
+        producerConsumer.produce(middleList);
+        producerConsumer.consume();
+        assertEquals(beginSize, producerConsumer.resultList.size());
     }
 
     @Test
     public void BigDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = bigList.size();
-        LinkedList<Integer> produceList = producerConsumer.produce(bigList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertEquals(beginSize, consumeList.size());
+        producerConsumer.produce(bigList);
+        producerConsumer.consume();
+        assertEquals(beginSize, producerConsumer.resultList.size());
     }
 
     @Test
     public void BiggestDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = biggestList.size();
-        LinkedList<Integer> produceList = producerConsumer.produce(biggestList);
-        LinkedList<Integer> consumeList = producerConsumer.consume(produceList);
-        assertEquals(beginSize, consumeList.size());
+        producerConsumer.produce(biggestList);
+        producerConsumer.consume();
+        assertEquals(beginSize, producerConsumer.resultList.size());
     }
 
     private boolean isArraySortedAscending(LinkedList<Integer> linkedList) {
