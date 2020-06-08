@@ -1,9 +1,9 @@
 package nl.hva;
 
-import helpers.StrandSortHelperMethods;
-
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import static helpers.StrandSortHelperMethods.merge;
 
 public class Strand {
     // note: the input list is destroyed
@@ -21,7 +21,7 @@ public class Strand {
                     it.remove();
                 }
             }
-            result = StrandSortHelperMethods.merge(sorted, result);
+            result = merge(sorted, result);
         }
         return result;
     }
