@@ -1,6 +1,8 @@
-package nl.hva.producerConsumer;
+package nl.hva;
 
 import datasets.TextFileReader;
+import nl.hva.producerConsumer.ProducerConsumerInterface;
+import nl.hva.producerConsumer.ProducerConsumerSort;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
