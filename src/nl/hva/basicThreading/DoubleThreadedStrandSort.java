@@ -1,11 +1,14 @@
 package nl.hva.basicThreading;
 
 import java.util.LinkedList;
+import java.util.List;
 
+import static helpers.PartitionLinkedList.partition;
 import static helpers.StrandSortHelperMethods.merge;
 import static helpers.StrandSortHelperMethods.orderList;
 
 public class DoubleThreadedStrandSort extends Thread {
+    private final int NUMBER_OF_THREADS = 2;
 
     private LinkedList<Integer> firstResultList;
     private LinkedList<Integer> secondResultList;
@@ -16,8 +19,9 @@ public class DoubleThreadedStrandSort extends Thread {
         firstResultList = new LinkedList<>();
         secondResultList = new LinkedList<>();
 
-        LinkedList<Integer> firstPart = new LinkedList<>(list.subList(0, (list.size() + 1) / 2));
-        LinkedList<Integer> secondPart = new LinkedList<>(list.subList((list.size() + 1) / 2, list.size()));
+        List<LinkedList<Integer>> partitions = partition(list, list.size() / NUMBER_OF_THREADS);
+        LinkedList<Integer> firstPart = partitions.get(0);
+        LinkedList<Integer> secondPart = partitions.get(1);
         LinkedList<Integer> output;
 
         Thread firstThread = new Thread(() -> {

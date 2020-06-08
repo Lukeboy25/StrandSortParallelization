@@ -8,6 +8,7 @@ import static helpers.PartitionLinkedList.partition;
 import static helpers.StrandSortHelperMethods.merge;
 
 public class FourThreadedStrandSort extends Thread {
+    private final int NUMBER_OF_THREADS = 4;
 
     private volatile LinkedList<Integer> outputPartOneTwo;
     private volatile LinkedList<Integer> outputPartThreeFour;
@@ -28,7 +29,7 @@ public class FourThreadedStrandSort extends Thread {
         thirdResultList = new LinkedList<>();
         fourthResultList = new LinkedList<>();
 
-        List<LinkedList<Integer>> partitions = partition(list, list.size() / 4);
+        List<LinkedList<Integer>> partitions = partition(list, list.size() / NUMBER_OF_THREADS);
         LinkedList<Integer> firstPart = partitions.get(0);
         LinkedList<Integer> secondPart = partitions.get(1);
         LinkedList<Integer> thirdPart = partitions.get(2);
