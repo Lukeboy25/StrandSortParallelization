@@ -79,45 +79,47 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
             wait();
         }
 
-        Thread firstThread = new Thread(() -> {
-            firstResultList = orderList(firstProduceList, firstResultList);
-        });
-        firstThread.start();
+        synchronized (this) {
+            Thread firstThread = new Thread(() -> {
+                firstResultList = orderList(firstProduceList, firstResultList);
+            });
+            firstThread.start();
 
-        Thread secondThread = new Thread(() -> {
-            secondProduceList = orderList(secondProduceList, secondResultList);
-        });
-        secondThread.start();
+            Thread secondThread = new Thread(() -> {
+                secondProduceList = orderList(secondProduceList, secondResultList);
+            });
+            secondThread.start();
 
-        firstThread.join();
-        secondThread.join();
+            firstThread.join();
+            secondThread.join();
 
-        firstThread = new Thread(() -> {
-            resultThreadOneTwo = merge(firstResultList, secondResultList);
-        });
-        firstThread.start();
+            firstThread = new Thread(() -> {
+                resultThreadOneTwo = merge(firstResultList, secondResultList);
+            });
+            firstThread.start();
 
-        Thread thirdThread = new Thread(() -> {
-            thirdProduceList = orderList(thirdProduceList, thirdResultList);
-        });
-        thirdThread.start();
+            Thread thirdThread = new Thread(() -> {
+                thirdProduceList = orderList(thirdProduceList, thirdResultList);
+            });
+            thirdThread.start();
 
-        Thread fourthThread = new Thread(() -> {
-            fourthProduceList = orderList(fourthProduceList, fourthResultList);
-        });
-        fourthThread.start();
+            Thread fourthThread = new Thread(() -> {
+                fourthProduceList = orderList(fourthProduceList, fourthResultList);
+            });
+            fourthThread.start();
 
-        thirdThread.join();
-        fourthThread.join();
+            thirdThread.join();
+            fourthThread.join();
 
-        thirdThread = new Thread(() -> {
-            resultThreadThreeFour = merge(thirdResultList, fourthResultList);
-        });
-        thirdThread.start();
+            thirdThread = new Thread(() -> {
+                resultThreadThreeFour = merge(thirdResultList, fourthResultList);
+            });
+            thirdThread.start();
 
-        firstThread.join();
-        thirdThread.join();
+            firstThread.join();
+            thirdThread.join();
 
-        result = merge(resultThreadOneTwo, resultThreadThreeFour);
+            result = merge(resultThreadOneTwo, resultThreadThreeFour);
+        }
     }
 }
