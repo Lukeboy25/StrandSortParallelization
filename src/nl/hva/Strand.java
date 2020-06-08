@@ -40,29 +40,4 @@ public class Strand {
         result.addAll(right);
         return result;
     }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        TextFileReader dataset = new TextFileReader();
-        LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
-        LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
-        LinkedList<Integer> bigList = dataset.readFile("src/datasets/bigDataSet.txt");
-        LinkedList<Integer> biggestList = dataset.readFile("src/datasets/biggestDataSet.txt");
-        long start = 0;
-
-        start = System.currentTimeMillis();
-        strandSort(smallestList);
-        System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - start));
-
-        start = System.currentTimeMillis();
-        strandSort(middleList);
-        System.out.println("Sorting time for 10.000 in milliseconds: " + (System.currentTimeMillis() - start));
-
-        start = System.currentTimeMillis();
-        strandSort(bigList);
-        System.out.println("Sorting time for 100.000 in milliseconds: " + (System.currentTimeMillis() - start));
-
-        start = System.currentTimeMillis();
-        strandSort(biggestList);
-        System.out.println("Sorting time for 250.000 in milliseconds: " + (System.currentTimeMillis() - start));
-    }
 }
