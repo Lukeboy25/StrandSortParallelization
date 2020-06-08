@@ -1,11 +1,6 @@
-import com.sun.net.httpserver.Authenticator;
 import datasets.TextFileReader;
-import nl.hva.DoubleThreadedStrandSort;
-import nl.hva.FourThreadedStrandSort;
-import nl.hva.OctaThreadedStrandSort;
 import nl.hva.Strand;
 import org.junit.jupiter.api.Test;
-
 import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -15,11 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StrandSortUnitTest {
 
     Strand strand = new Strand();
-    private TextFileReader dataset = new TextFileReader();
-    private LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
-    private LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
-    private LinkedList<Integer> bigList = dataset.readFile("src/datasets/bigDataSet.txt");
-    private LinkedList<Integer> biggestList = dataset.readFile("src/datasets/biggestDataSet.txt");
+    private LinkedList<Integer> smallestList = TextFileReader.readFile("src/datasets/smallestDataSet.txt");
+    private LinkedList<Integer> middleList = TextFileReader.readFile("src/datasets/middleDataSet.txt");
+    private LinkedList<Integer> bigList = TextFileReader.readFile("src/datasets/bigDataSet.txt");
+    private LinkedList<Integer> biggestList = TextFileReader.readFile("src/datasets/biggestDataSet.txt");
     private int beginSize = 0;
 
     private LinkedList<Integer> biggestJavaSortedInputList = new LinkedList<>(biggestList);
@@ -31,7 +25,7 @@ public class StrandSortUnitTest {
         Collections.sort(biggestJavaSortedInputList);
         LinkedList<Integer> resultList = strand.strandSort(biggestList);
 
-        assertEquals(resultList.equals(biggestJavaSortedInputList), true);
+        assertEquals(resultList, biggestJavaSortedInputList);
     }
 
     //Ascending tests

@@ -12,11 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DoubleThreadedStrandSortUnitTest {
 
     DoubleThreadedStrandSort doubleStrandSort = new DoubleThreadedStrandSort();
-    private TextFileReader dataset = new TextFileReader();
-    private LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
-    private LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
-    private LinkedList<Integer> bigList = dataset.readFile("src/datasets/bigDataSet.txt");
-    private LinkedList<Integer> biggestList = dataset.readFile("src/datasets/biggestDataSet.txt");
+    private LinkedList<Integer> smallestList = TextFileReader.readFile("src/datasets/smallestDataSet.txt");
+    private LinkedList<Integer> middleList = TextFileReader.readFile("src/datasets/middleDataSet.txt");
+    private LinkedList<Integer> bigList = TextFileReader.readFile("src/datasets/bigDataSet.txt");
+    private LinkedList<Integer> biggestList = TextFileReader.readFile("src/datasets/biggestDataSet.txt");
     private int beginSize = 0;
 
     private LinkedList<Integer> biggestJavaSortedInputList = new LinkedList<>(biggestList);

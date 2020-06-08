@@ -13,11 +13,10 @@ public class StrandSortVarientExecutioner {
         FourThreadedStrandSort fourThreadedStrandSort = new FourThreadedStrandSort();
         OctaThreadedStrandSort octaThreadedStrandSort = new OctaThreadedStrandSort();
 
-        TextFileReader reader = new TextFileReader();
-        LinkedList<Integer> smallestList = reader.readFile("src/datasets/smallestDataSet.txt");
-        LinkedList<Integer> middleList =  reader.readFile("src/datasets/middleDataSet.txt");
-        LinkedList<Integer> bigList =  reader.readFile("src/datasets/bigDataSet.txt");
-        LinkedList<Integer> biggestList = reader.readFile("src/datasets/biggestDataSet.txt");
+        LinkedList<Integer> smallestList = TextFileReader.readFile("src/datasets/smallestDataSet.txt");
+        LinkedList<Integer> middleList =  TextFileReader.readFile("src/datasets/middleDataSet.txt");
+        LinkedList<Integer> bigList =  TextFileReader.readFile("src/datasets/bigDataSet.txt");
+        LinkedList<Integer> biggestList = TextFileReader.readFile("src/datasets/biggestDataSet.txt");
         long start;
 
         start = System.currentTimeMillis();
