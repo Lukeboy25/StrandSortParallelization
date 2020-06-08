@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OctaThreadedStrandSortUnitTest {
+    OctaThreadedStrandSort octaThreadedStrandSort = new OctaThreadedStrandSort();
     private TextFileReader dataset = new TextFileReader();
     private LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
     private LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
@@ -24,7 +25,7 @@ public class OctaThreadedStrandSortUnitTest {
     @Test
     public void StrandSortResultIsSameAsDefaultCollectionSort() {
         Collections.sort(biggestJavaSortedInputList);
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(biggestList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(biggestList);
 
         assertEquals(resultList.equals(biggestJavaSortedInputList), true);
     }
@@ -32,25 +33,25 @@ public class OctaThreadedStrandSortUnitTest {
     //Ascending tests
     @Test
     public void SmallDataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(smallestList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(smallestList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
     @Test
     public void MediumSetIsSortedAscending() {
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(middleList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(middleList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
     @Test
     public void BigDataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(bigList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(bigList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
     @Test
     public void BiggestDataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(biggestList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(biggestList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
@@ -58,28 +59,28 @@ public class OctaThreadedStrandSortUnitTest {
     @Test
     public void SmallDataResultIsSameSizeAsStartList() {
         beginSize = smallestList.size();
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(smallestList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(smallestList);
         assertEquals(resultList.size(), beginSize);
     }
 
     @Test
     public void MediumDataResultIsSameSizeAsStartList() {
         beginSize = middleList.size();
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(middleList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(middleList);
         assertEquals(beginSize,resultList.size());
     }
 
     @Test
     public void BigDataResultIsSameSizeAsStartList() {
         beginSize = bigList.size();
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(bigList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(bigList);
         assertEquals(beginSize,resultList.size());
     }
 
     @Test
     public void BiggestDataResultIsSameSizeAsStartList() {
         beginSize = biggestList.size();
-        LinkedList<Integer> resultList = OctaThreadedStrandSort.strandSort(biggestList);
+        LinkedList<Integer> resultList = octaThreadedStrandSort.strandSort(biggestList);
         assertEquals(beginSize,resultList.size());
     }
 

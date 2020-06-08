@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DoubleThreadedStrandSortUnitTest {
 
+    DoubleThreadedStrandSort doubleStrandSort = new DoubleThreadedStrandSort();
     private TextFileReader dataset = new TextFileReader();
     private LinkedList<Integer> smallestList = dataset.readFile("src/datasets/smallestDataSet.txt");
     private LinkedList<Integer> middleList = dataset.readFile("src/datasets/middleDataSet.txt");
@@ -25,7 +26,7 @@ public class DoubleThreadedStrandSortUnitTest {
     @Test
     public void StrandSortResultIsSameAsDefaultCollectionSort() {
         Collections.sort(biggestJavaSortedInputList);
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(biggestList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(biggestList);
 
         assertEquals(resultList.equals(biggestJavaSortedInputList), true);
     }
@@ -33,25 +34,25 @@ public class DoubleThreadedStrandSortUnitTest {
     //Ascending tests
     @Test
     public void SmallDataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(smallestList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(smallestList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
     @Test
     public void MediumSetIsSortedAscending() {
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(middleList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(middleList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
     @Test
     public void BigDataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(bigList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(bigList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
     @Test
     public void BiggestDataSetIsSortedAscending() {
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(biggestList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(biggestList);
         assertTrue(isArraySortedAscending(resultList));
     }
 
@@ -59,28 +60,28 @@ public class DoubleThreadedStrandSortUnitTest {
     @Test
     public void SmallDataResultIsSameSizeAsStartList() {
         beginSize = smallestList.size();
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(smallestList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(smallestList);
         assertEquals(resultList.size(), beginSize);
     }
 
     @Test
     public void MediumDataResultIsSameSizeAsStartList() {
         beginSize = middleList.size();
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(middleList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(middleList);
         assertEquals(beginSize,resultList.size());
     }
 
     @Test
     public void BigDataResultIsSameSizeAsStartList() {
         beginSize = bigList.size();
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(bigList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(bigList);
         assertEquals(beginSize,resultList.size());
     }
 
     @Test
     public void BiggestDataResultIsSameSizeAsStartList() {
         beginSize = biggestList.size();
-        LinkedList<Integer> resultList = DoubleThreadedStrandSort.strandSort(biggestList);
+        LinkedList<Integer> resultList = doubleStrandSort.strandSort(biggestList);
         assertEquals(beginSize,resultList.size());
     }
 
