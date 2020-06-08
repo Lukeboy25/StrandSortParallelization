@@ -1,14 +1,18 @@
 package nl.hva;
 
 import datasets.TextFileReader;
+import nl.hva.basicThreading.DoubleThreadedStrandSort;
+import nl.hva.basicThreading.FourThreadedStrandSort;
+import nl.hva.basicThreading.OctaThreadedStrandSort;
+import nl.hva.basicThreading.StrandSort;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
-public class StrandSortVarientExecutioner {
+public class StrandSortVariantExecutioner {
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-        Strand originalStrandSort = new Strand();
+        StrandSort originalStrandSortSort = new StrandSort();
         DoubleThreadedStrandSort doubleThreadedStrandSort = new DoubleThreadedStrandSort();
         FourThreadedStrandSort fourThreadedStrandSort = new FourThreadedStrandSort();
         OctaThreadedStrandSort octaThreadedStrandSort = new OctaThreadedStrandSort();
@@ -20,19 +24,19 @@ public class StrandSortVarientExecutioner {
         long start;
 
         start = System.currentTimeMillis();
-        originalStrandSort.strandSort(smallestList);
+        originalStrandSortSort.strandSort(smallestList);
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        originalStrandSort.strandSort(middleList);
+        originalStrandSortSort.strandSort(middleList);
         System.out.println("Sorting time for 10.000 in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        originalStrandSort.strandSort(bigList);
+        originalStrandSortSort.strandSort(bigList);
         System.out.println("Sorting time for 100.000 in milliseconds: " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
-        originalStrandSort.strandSort(biggestList);
+        originalStrandSortSort.strandSort(biggestList);
         System.out.println("Sorting time for 250.000 in milliseconds: " + (System.currentTimeMillis() - start));
     }
 }

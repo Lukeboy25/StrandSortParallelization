@@ -33,13 +33,13 @@ public class OctaThreadedStrandSort extends Thread {
         ArrayList<Thread> tasks = new ArrayList<>(NUMBER_OF_THREADS);
 
         for (int i = 0; i < NUMBER_OF_THREADS; i++) {
-            int counter = i;
-            LinkedList<Integer> listPart = partitions.get(i);
-            resultListParts[i] = new LinkedList<>();
+                  int counter = i;
+        LinkedList<Integer> listPart = partitions.get(i);
+        resultListParts[i] = new LinkedList<>();
 
-            tasks.add(new Thread(() -> resultListParts[counter] = orderList(listPart, resultListParts[counter])));
-            tasks.get(i).start();
-        }
+        tasks.add(new Thread(() -> resultListParts[counter] = orderList(listPart, resultListParts[counter])));
+        tasks.get(i).start();
+    }
 
         try {
             Thread firstThread = tasks.get(0);

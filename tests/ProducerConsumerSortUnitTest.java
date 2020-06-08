@@ -1,5 +1,5 @@
 import datasets.TextFileReader;
-import nl.hva.ProducerConsumerSort;
+import nl.hva.producerConsumer.ProducerConsumerSort;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import static helpers.StrandSortHelperMethods.merge;
 
-public class Strand {
+public class StrandSort {
     // note: the input list is destroyed
     public LinkedList<Integer> strandSort(LinkedList<Integer> list) {
         if (list.size() <= 1) return list;
