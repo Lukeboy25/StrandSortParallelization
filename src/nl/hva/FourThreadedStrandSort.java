@@ -1,15 +1,11 @@
 package nl.hva;
 
-import datasets.TextFileReader;
-
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
-import static helpers.StandSortHelperMethods.orderList;
+import static helpers.StrandSortHelperMethods.orderList;
 import static helpers.PartitionLinkedList.partition;
-import static helpers.StandSortHelperMethods.merge;
+import static helpers.StrandSortHelperMethods.merge;
 
 public class FourThreadedStrandSort extends Thread {
 

@@ -1,13 +1,10 @@
 package nl.hva;
 
-import datasets.TextFileReader;
-
-import java.io.FileNotFoundException;
 import java.util.*;
 
 import static helpers.PartitionLinkedList.partition;
-import static helpers.StandSortHelperMethods.merge;
-import static helpers.StandSortHelperMethods.orderList;
+import static helpers.StrandSortHelperMethods.merge;
+import static helpers.StrandSortHelperMethods.orderList;
 
 public class OctaThreadedStrandSort extends Thread {
     private static final int NUMBER_OF_THREADS = 8;

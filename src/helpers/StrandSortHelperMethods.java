@@ -3,7 +3,7 @@ package helpers;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class StandSortHelperMethods {
+public class StrandSortHelperMethods {
     public static LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
         LinkedList<Integer> result = new LinkedList<>();
         while (!left.isEmpty() && !right.isEmpty()) {

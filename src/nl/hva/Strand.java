@@ -1,8 +1,7 @@
 package nl.hva;
 
-import datasets.TextFileReader;
+import helpers.StrandSortHelperMethods;
 
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -22,22 +21,8 @@ public class Strand {
                     it.remove();
                 }
             }
-            result = merge(sorted, result);
+            result = StrandSortHelperMethods.merge(sorted, result);
         }
-        return result;
-    }
-
-    public static LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
-        LinkedList<Integer> result = new LinkedList<>();
-        while (!left.isEmpty() && !right.isEmpty()) {
-            //change the direction of this comparison to change the direction of the sort
-            if (left.peek().compareTo(right.peek()) <= 0)
-                result.add(left.remove());
-            else
-                result.add(right.remove());
-        }
-        result.addAll(left);
-        result.addAll(right);
         return result;
     }
 }
