@@ -15,6 +15,7 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
     private LinkedList<Integer> secondProduceList = new LinkedList<>();
     private LinkedList<Integer> thirdProduceList = new LinkedList<>();
     private LinkedList<Integer> fourthProduceList = new LinkedList<>();
+
     private LinkedList<Integer> firstResultList = new LinkedList<>();
     private LinkedList<Integer> secondResultList = new LinkedList<>();
     private LinkedList<Integer> thirdResultList = new LinkedList<>();
@@ -84,14 +85,17 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
                 firstResultList = orderList(firstProduceList, firstResultList);
             });
             firstThread.start();
+            firstThread.join();
+
+            notify();
 
             Thread secondThread = new Thread(() -> {
                 secondProduceList = orderList(secondProduceList, secondResultList);
             });
             secondThread.start();
-
-            firstThread.join();
             secondThread.join();
+
+            notify();
 
             firstThread = new Thread(() -> {
                 resultThreadOneTwo = merge(firstResultList, secondResultList);
@@ -111,6 +115,8 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
             thirdThread.join();
             fourthThread.join();
 
+            notify();
+
             thirdThread = new Thread(() -> {
                 resultThreadThreeFour = merge(thirdResultList, fourthResultList);
             });
@@ -118,6 +124,8 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
 
             firstThread.join();
             thirdThread.join();
+
+            notify();
 
             result = merge(resultThreadOneTwo, resultThreadThreeFour);
         }

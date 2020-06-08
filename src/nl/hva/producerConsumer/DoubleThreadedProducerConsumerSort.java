@@ -64,7 +64,6 @@ public class DoubleThreadedProducerConsumerSort implements ProducerConsumerInter
             });
 
             secondThread.start();
-
             secondThread.join();
 
             resultList = merge(firstResultList, secondResultList);

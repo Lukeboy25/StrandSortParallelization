@@ -16,16 +16,16 @@ public class ProducerConsumerSortExecutioner {
         DoubleThreadedProducerConsumerSort doubleThreadedSorter = new DoubleThreadedProducerConsumerSort();
         FourThreadedProducerConsumerSort fourThreadedSorter = new FourThreadedProducerConsumerSort();
 
-        long elapsedSmallestTime = calculateTime(producerConsumerSort, "src/datasets/smallestDataSet.txt");
+        long elapsedSmallestTime = calculateTime(fourThreadedSorter, "src/datasets/smallestDataSet.txt");
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - elapsedSmallestTime));
 
-        long elapsedMiddleTime = calculateTime(producerConsumerSort, "src/datasets/middleDataSet.txt");
+        long elapsedMiddleTime = calculateTime(fourThreadedSorter, "src/datasets/middleDataSet.txt");
         System.out.println("Sorting time for 10.000 in milliseconds: " + (System.currentTimeMillis() - elapsedMiddleTime));
 
-        long elapsedBigTime = calculateTime(producerConsumerSort, "src/datasets/bigDataSet.txt");
+        long elapsedBigTime = calculateTime(fourThreadedSorter, "src/datasets/bigDataSet.txt");
         System.out.println("Sorting time for 100.000 in milliseconds: " + (System.currentTimeMillis() - elapsedBigTime));
 
-        long elapsedBiggestTime = calculateTime(producerConsumerSort, "src/datasets/biggestDataSet.txt");
+        long elapsedBiggestTime = calculateTime(fourThreadedSorter, "src/datasets/biggestDataSet.txt");
         System.out.println("Sorting time for 250.000 in milliseconds: " + (System.currentTimeMillis() - elapsedBiggestTime));
     }
 
