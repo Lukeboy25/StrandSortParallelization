@@ -90,7 +90,7 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
             notify();
 
             Thread secondThread = new Thread(() -> {
-                secondProduceList = orderList(secondProduceList, secondResultList);
+                secondResultList = orderList(secondProduceList, secondResultList);
             });
             secondThread.start();
             secondThread.join();
@@ -103,12 +103,12 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
             firstThread.start();
 
             Thread thirdThread = new Thread(() -> {
-                thirdProduceList = orderList(thirdProduceList, thirdResultList);
+                thirdResultList = orderList(thirdProduceList, thirdResultList);
             });
             thirdThread.start();
 
             Thread fourthThread = new Thread(() -> {
-                fourthProduceList = orderList(fourthProduceList, fourthResultList);
+                fourthResultList = orderList(fourthProduceList, fourthResultList);
             });
             fourthThread.start();
 
