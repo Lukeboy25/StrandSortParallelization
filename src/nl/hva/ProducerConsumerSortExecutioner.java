@@ -1,6 +1,7 @@
 package nl.hva;
 
 import datasets.TextFileReader;
+import nl.hva.producerConsumer.FourThreadedProducerConsumerSort;
 import nl.hva.producerConsumer.ProducerConsumerInterface;
 import nl.hva.producerConsumer.ProducerConsumerSort;
 
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 public class ProducerConsumerSortExecutioner {
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-        ProducerConsumerSort sorter = new ProducerConsumerSort();
+        FourThreadedProducerConsumerSort sorter = new FourThreadedProducerConsumerSort();
 
         long elapsedSmallestTime = calculateTime(sorter, "src/datasets/smallestDataSet.txt");
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - elapsedSmallestTime));
@@ -29,8 +30,8 @@ public class ProducerConsumerSortExecutioner {
         LinkedList<Integer> unsortedList = TextFileReader.readFile(filePath);
 
         long elapsedTime = System.currentTimeMillis();
-        LinkedList<Integer> producerList = producerConsumer.produce(unsortedList);
-        producerConsumer.consume(producerList);
+        producerConsumer.produce(unsortedList);
+        producerConsumer.consume();
 
         return elapsedTime;
     }
