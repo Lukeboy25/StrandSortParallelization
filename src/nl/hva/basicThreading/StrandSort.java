@@ -1,4 +1,4 @@
-package nl.hva;
+package nl.hva.basicThreading;
 
 import java.util.Iterator;
 import java.util.LinkedList;

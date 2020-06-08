@@ -1,4 +1,4 @@
-package nl.hva;
+package nl.hva.producerConsumer;
 
 import java.util.LinkedList;
 
