@@ -25,8 +25,7 @@ class DoubleThreadedProducerConsumerSortUnitTest {
     @Test
     public void StrandSortResultIsSameAsDefaultCollectionSort() throws InterruptedException {
         Collections.sort(biggestJavaSortedInputList);
-        doubleThreadedProducerConsumer.produce(biggestJavaSortedInputList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(biggestJavaSortedInputList);
 
         assertEquals(doubleThreadedProducerConsumer.resultList, biggestJavaSortedInputList);
     }
@@ -34,29 +33,25 @@ class DoubleThreadedProducerConsumerSortUnitTest {
     // Ascending tests
     @Test
     public void SmallDataSetIsSortedAscending() throws InterruptedException {
-        doubleThreadedProducerConsumer.produce(smallestList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(smallestList);
         assertTrue(isArraySortedAscending(doubleThreadedProducerConsumer.resultList));
     }
 
     @Test
     public void MediumSetIsSortedAscending() throws InterruptedException {
-        doubleThreadedProducerConsumer.produce(middleList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(middleList);
         assertTrue(isArraySortedAscending(doubleThreadedProducerConsumer.resultList));
     }
 
     @Test
     public void BigDataSetIsSortedAscending() throws InterruptedException {
-        doubleThreadedProducerConsumer.produce(bigList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(bigList);
         assertTrue(isArraySortedAscending(doubleThreadedProducerConsumer.resultList));
     }
 
     @Test
     public void BiggestDataSetIsSortedAscending() throws InterruptedException {
-        doubleThreadedProducerConsumer.produce(biggestList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(biggestList);
         assertTrue(isArraySortedAscending(doubleThreadedProducerConsumer.resultList));
     }
 
@@ -64,32 +59,28 @@ class DoubleThreadedProducerConsumerSortUnitTest {
     @Test
     public void SmallDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = smallestList.size();
-        doubleThreadedProducerConsumer.produce(smallestList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(smallestList);
         assertEquals(beginSize, doubleThreadedProducerConsumer.resultList.size());
     }
 
     @Test
     public void MediumDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = middleList.size();
-        doubleThreadedProducerConsumer.produce(middleList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(middleList);
         assertEquals(beginSize, doubleThreadedProducerConsumer.resultList.size());
     }
 
     @Test
     public void BigDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = bigList.size();
-        doubleThreadedProducerConsumer.produce(bigList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(bigList);
         assertEquals(beginSize, doubleThreadedProducerConsumer.resultList.size());
     }
 
     @Test
     public void BiggestDataResultIsSameSizeAsStartList() throws InterruptedException {
         beginSize = biggestList.size();
-        doubleThreadedProducerConsumer.produce(biggestList);
-        doubleThreadedProducerConsumer.consume();
+        doubleThreadedProducerConsumer.starter(biggestList);
         assertEquals(beginSize, doubleThreadedProducerConsumer.resultList.size());
     }
 
