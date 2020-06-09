@@ -11,7 +11,7 @@ public class ProducerConsumerSortExecutioner {
     private static ProducerConsumerHelper producerConsumerHelper = new ProducerConsumerHelper();
 
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-        int amountOfThreads = 8;
+        int amountOfThreads = 32;
 
         long elapsedSmallestTime = calculateTime(amountOfThreads, "src/datasets/smallestDataSet.txt");
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - elapsedSmallestTime));

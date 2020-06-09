@@ -39,7 +39,9 @@ public class ProducerConsumerHelper {
                 }
             }));
             consumeTasks.get(i).start();
+        }
 
+        for (int i = 0; i < amountOfThreads; i++) {
             produceTasks.get(i).join();
             consumeTasks.get(i).join();
         }
