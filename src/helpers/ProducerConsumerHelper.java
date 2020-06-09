@@ -10,8 +10,8 @@ import static helpers.StrandSortHelperMethods.orderList;
 
 public class ProducerConsumerHelper {
 
-    private LinkedList<Integer> consumeList = new LinkedList<Integer>();
-    private LinkedList<Integer> temporarilyList = new LinkedList<Integer>();
+    private volatile LinkedList<Integer> consumeList = new LinkedList<Integer>();
+    private volatile LinkedList<Integer> temporaryList = new LinkedList<Integer>();
 
     public void starter(LinkedList<Integer> produceList, int amountOfThreads) throws InterruptedException {
         List<LinkedList<Integer>> partitions = partition(produceList, produceList.size() / amountOfThreads);
@@ -60,7 +60,7 @@ public class ProducerConsumerHelper {
         }
     }
 
-    public LinkedList<Integer> resultList = new LinkedList<Integer>();
+    public volatile LinkedList<Integer> resultList = new LinkedList<Integer>();
 
     private void consume() throws InterruptedException {
         synchronized (this) {
@@ -68,9 +68,9 @@ public class ProducerConsumerHelper {
                 wait();
             }
 
-            temporarilyList = orderList(consumeList, temporarilyList);
-            resultList = merge(temporarilyList, resultList);
-            temporarilyList.clear();
+            temporaryList = orderList(consumeList, temporaryList);
+            resultList = merge(temporaryList, resultList);
+            temporaryList.clear();
 
             notify();
         }
