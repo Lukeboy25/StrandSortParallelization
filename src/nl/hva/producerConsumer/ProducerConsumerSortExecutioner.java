@@ -8,6 +8,8 @@ import java.util.LinkedList;
 
 public class ProducerConsumerSortExecutioner {
 
+    private static ProducerConsumerHelper producerConsumerHelper = new ProducerConsumerHelper();
+
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         int amountOfThreads = 8;
 
@@ -25,7 +27,7 @@ public class ProducerConsumerSortExecutioner {
     }
 
     private static long calculateTime(int amountOfThreads, String filePath) throws FileNotFoundException, InterruptedException {
-        ProducerConsumerHelper producerConsumerHelper = new ProducerConsumerHelper();
+
         LinkedList<Integer> unsortedList = TextFileReader.readFile(filePath);
 
         long elapsedTime = System.currentTimeMillis();
