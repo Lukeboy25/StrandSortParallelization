@@ -14,18 +14,18 @@ public class ProducerConsumerSortExecutioner {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         ProducerConsumerSort producerConsumerSort = new ProducerConsumerSort();
         DoubleThreadedProducerConsumerSort doubleThreadedSorter = new DoubleThreadedProducerConsumerSort();
-        FourThreadedProducerConsumerSort fourThreadedSorter = new FourThreadedProducerConsumerSort();
+        //FourThreadedProducerConsumerSort fourThreadedSorter = new FourThreadedProducerConsumerSort();
 
-        long elapsedSmallestTime = calculateTime(fourThreadedSorter, "src/datasets/smallestDataSet.txt");
+        long elapsedSmallestTime = calculateTime(doubleThreadedSorter, "src/datasets/smallestDataSet.txt");
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - elapsedSmallestTime));
 
-        long elapsedMiddleTime = calculateTime(fourThreadedSorter, "src/datasets/middleDataSet.txt");
+        long elapsedMiddleTime = calculateTime(doubleThreadedSorter, "src/datasets/middleDataSet.txt");
         System.out.println("Sorting time for 10.000 in milliseconds: " + (System.currentTimeMillis() - elapsedMiddleTime));
 
-        long elapsedBigTime = calculateTime(fourThreadedSorter, "src/datasets/bigDataSet.txt");
+        long elapsedBigTime = calculateTime(doubleThreadedSorter, "src/datasets/bigDataSet.txt");
         System.out.println("Sorting time for 100.000 in milliseconds: " + (System.currentTimeMillis() - elapsedBigTime));
 
-        long elapsedBiggestTime = calculateTime(fourThreadedSorter, "src/datasets/biggestDataSet.txt");
+        long elapsedBiggestTime = calculateTime(doubleThreadedSorter, "src/datasets/biggestDataSet.txt");
         System.out.println("Sorting time for 250.000 in milliseconds: " + (System.currentTimeMillis() - elapsedBiggestTime));
     }
 
@@ -33,8 +33,7 @@ public class ProducerConsumerSortExecutioner {
         LinkedList<Integer> unsortedList = TextFileReader.readFile(filePath);
 
         long elapsedTime = System.currentTimeMillis();
-        producerConsumer.produce(unsortedList);
-        producerConsumer.consume();
+        producerConsumer.starter(unsortedList);
 
         return elapsedTime;
     }

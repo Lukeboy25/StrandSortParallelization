@@ -10,35 +10,70 @@ import static helpers.StrandSortHelperMethods.orderList;
 public class DoubleThreadedProducerConsumerSort implements ProducerConsumerInterface {
     private final int NUMBER_OF_THREADS = 2;
 
-    private LinkedList<Integer> firstProduceList = new LinkedList<Integer>();
-    private LinkedList<Integer> secondProduceList = new LinkedList<Integer>();
+    private LinkedList<Integer> consumeList = new LinkedList<Integer>();
+    private LinkedList<Integer> temporarilyList = new LinkedList<Integer>();
 
-    private LinkedList<Integer> firstResultList = new LinkedList<Integer>();
-    private LinkedList<Integer> secondResultList = new LinkedList<Integer>();
+    @Override
+    public void starter(LinkedList<Integer> produceList) throws InterruptedException {
+        List<LinkedList<Integer>> partitions = partition(produceList, produceList.size() / NUMBER_OF_THREADS);
+
+        Thread firstThread = new Thread(() -> {
+            try {
+                produce(partitions.get(0));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        firstThread.start();
+
+        Thread secondThread = new Thread(() -> {
+            try {
+                consume();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        secondThread.start();
+
+        firstThread.join();
+        secondThread.join();
+
+        firstThread = new Thread(() -> {
+            try {
+                produce(partitions.get(1));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        firstThread.start();
+
+        secondThread = new Thread(() -> {
+            try {
+                consume();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        secondThread.start();
+
+        firstThread.join();
+        secondThread.join();
+
+    }
 
     @Override
     public void produce(LinkedList<Integer> produceList) throws InterruptedException {
-        List<LinkedList<Integer>> partitions = partition(produceList, produceList.size() / NUMBER_OF_THREADS);
-
-        while (firstProduceList.size() == (produceList.size() / NUMBER_OF_THREADS) && secondProduceList.size() == (produceList.size() / NUMBER_OF_THREADS)) {
-            wait();
-        }
-
         synchronized (this) {
-            Thread firstThread = new Thread(() -> {
-                firstProduceList = partitions.get(0);
-            });
-            firstThread.start();
-            firstThread.join();
+            while (consumeList.size() == produceList.size()) {
+                wait();
+            }
 
+            consumeList.addAll(produceList);
+
+            // notifies the consumer thread that it can start consuming
             notify();
-
-            Thread secondThread = new Thread(() -> {
-                secondProduceList = partitions.get(1);
-            });
-            secondThread.start();
-
-            secondThread.join();
         }
     }
 
@@ -46,27 +81,16 @@ public class DoubleThreadedProducerConsumerSort implements ProducerConsumerInter
 
     @Override
     public void consume() throws InterruptedException {
-        while (firstProduceList.size() == 0 && secondProduceList.size() == 0) {
-            wait();
-        }
-
         synchronized (this) {
-            Thread firstThread = new Thread(() -> {
-                firstResultList = orderList(firstProduceList, firstResultList);
-            });
-            firstThread.start();
-            firstThread.join();
+            while (consumeList.isEmpty()) {
+                wait();
+            }
+
+            temporarilyList = orderList(consumeList, temporarilyList);
+            resultList = merge(temporarilyList, resultList);
+            temporarilyList.clear();
 
             notify();
-
-            Thread secondThread = new Thread(() -> {
-                secondResultList = orderList(secondProduceList, secondResultList);
-            });
-
-            secondThread.start();
-            secondThread.join();
-
-            resultList = merge(firstResultList, secondResultList);
         }
     }
 }

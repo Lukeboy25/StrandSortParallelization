@@ -26,6 +26,11 @@ public class FourThreadedProducerConsumerSort implements ProducerConsumerInterfa
     public static LinkedList<Integer> result = new LinkedList<>();
 
     @Override
+    public void starter(LinkedList<Integer> produceList) throws InterruptedException {
+
+    }
+
+    @Override
     public void produce(LinkedList<Integer> produceList) throws InterruptedException {
 
         List<LinkedList<Integer>> partitions = partition(produceList, produceList.size() / NUMBER_OF_THREADS);

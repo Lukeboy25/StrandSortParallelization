@@ -9,6 +9,11 @@ public class ProducerConsumerSort implements ProducerConsumerInterface {
     LinkedList<Integer> produceList = new LinkedList<Integer>();
 
     @Override
+    public void starter(LinkedList<Integer> produceList) throws InterruptedException {
+
+    }
+
+    @Override
     public void produce(LinkedList<Integer> list) throws InterruptedException {
         synchronized (this) {
             while (list.size() == produceList.size()) {
