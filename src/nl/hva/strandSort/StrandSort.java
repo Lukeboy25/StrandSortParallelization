@@ -1,4 +1,4 @@
-package nl.hva.basicThreading;
+package nl.hva.strandSort;
 
 import java.util.Iterator;
 import java.util.LinkedList;

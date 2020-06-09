@@ -1,10 +1,10 @@
-package nl.hva;
+package nl.hva.strandSort;
 
 import datasets.TextFileReader;
-import nl.hva.basicThreading.DoubleThreadedStrandSort;
-import nl.hva.basicThreading.FourThreadedStrandSort;
-import nl.hva.basicThreading.OctaThreadedStrandSort;
-import nl.hva.basicThreading.StrandSort;
+import nl.hva.strandSort.DoubleThreadedStrandSort;
+import nl.hva.strandSort.FourThreadedStrandSort;
+import nl.hva.strandSort.OctaThreadedStrandSort;
+import nl.hva.strandSort.StrandSort;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;

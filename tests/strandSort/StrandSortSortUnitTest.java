@@ -1,5 +1,7 @@
+package strandSort;
+
 import datasets.TextFileReader;
-import nl.hva.basicThreading.StrandSort;
+import nl.hva.strandSort.StrandSort;
 import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
 import java.util.Collections;
