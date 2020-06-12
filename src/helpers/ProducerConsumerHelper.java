@@ -56,7 +56,7 @@ public class ProducerConsumerHelper {
             consumeList.addAll(produceList);
 
             // notifies the consumer thread that it can start consuming
-            notify();
+            notifyAll();
         }
     }
 
