@@ -1,17 +1,18 @@
-package nl.hva.producerConsumer;
+package nl.hva.activeMQ;
 
 import datasets.TextFileReader;
-import helpers.ProducerConsumerHelper;
+import helpers.ActiveMQHelper;
 
+import javax.jms.JMSException;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
-public class ProducerConsumerSortExecutioner {
+public class ActiveMQSortExecutioner {
 
-    private static ProducerConsumerHelper producerConsumerHelper = new ProducerConsumerHelper();
+    private static ActiveMQHelper activeMQHelper = new ActiveMQHelper();
 
-    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-        int amountOfThreads = 8;
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException, JMSException {
+        int amountOfThreads = 2;
 
         long elapsedSmallestTime = calculateTime(amountOfThreads, "src/datasets/smallestDataSet.txt");
         System.out.println("Sorting time for 1000 in milliseconds: " + (System.currentTimeMillis() - elapsedSmallestTime));
@@ -26,11 +27,11 @@ public class ProducerConsumerSortExecutioner {
         System.out.println("Sorting time for 250.000 in milliseconds: " + (System.currentTimeMillis() - elapsedBiggestTime));
     }
 
-    private static long calculateTime(int amountOfThreads, String filePath) throws FileNotFoundException, InterruptedException {
+    private static long calculateTime(int amountOfThreads, String filePath) throws FileNotFoundException, InterruptedException, JMSException {
         LinkedList<Integer> unsortedList = TextFileReader.readFile(filePath);
 
         long elapsedTime = System.currentTimeMillis();
-        producerConsumerHelper.starter(unsortedList, amountOfThreads);
+        activeMQHelper.starter(unsortedList, amountOfThreads);
 
         return elapsedTime;
     }
