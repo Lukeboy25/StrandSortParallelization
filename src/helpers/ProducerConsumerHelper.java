@@ -9,7 +9,6 @@ import static helpers.StrandSortHelperMethods.merge;
 import static helpers.StrandSortHelperMethods.orderList;
 
 public class ProducerConsumerHelper {
-
     private volatile LinkedList<Integer> consumeList = new LinkedList<Integer>();
     private volatile LinkedList<Integer> temporaryList = new LinkedList<Integer>();
 
