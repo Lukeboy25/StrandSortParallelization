@@ -16,6 +16,7 @@ import javax.jms.*;
 public class ActiveMQHelper {
     private volatile LinkedList<Integer> temporaryList = new LinkedList<Integer>();
     private static final String URL = "tcp://localhost:61616?jms.prefetchPolicy.all=1";
+    private final String QUEUE_NAME = "Queue";
 
     private Session session;
     private Destination destination;
@@ -31,6 +32,7 @@ public class ActiveMQHelper {
         ArrayList<Thread> consumeTasks = new ArrayList<>(amountOfThreads);
 
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
+        connectionFactory.setTrustAllPackages(true);
         connection = connectionFactory.createConnection();
         connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -68,14 +70,13 @@ public class ActiveMQHelper {
             consumeTasks.get(i).join();
         }
 
-
-        System.out.println("produced: " + produced);
-        System.out.println("consumed: " + consumed);
+        //System.out.println("produced: " + produced);
+        //System.out.println("consumed: " + consumed);
 
         connection.close();
     }
 
-    private synchronized void produce(LinkedList<Integer> produceList) throws JMSException {
+    private void produce(LinkedList<Integer> produceList) throws JMSException {
         MessageProducer producer = session.createProducer(destination);
         String listString = produceList.stream().map(Object::toString).collect(Collectors.joining(","));
 
@@ -83,7 +84,7 @@ public class ActiveMQHelper {
         TextMessage textMessage = session.createTextMessage(produceListString);
 
         producer.send(textMessage);
-        System.out.println("P");
+        //System.out.println("P");
         produced++;
     }
 
@@ -105,7 +106,7 @@ public class ActiveMQHelper {
                 resultList = merge(temporaryList, resultList);
                 temporaryList.clear();
 
-                System.out.println("C");
+                //System.out.println("C");
                 consumed++;
             } catch (JMSException e) {
                 e.printStackTrace();
