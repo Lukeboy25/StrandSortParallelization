@@ -1,14 +1,12 @@
 package helpers;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static helpers.PartitionLinkedList.partition;
 import static helpers.StrandSortHelperMethods.merge;
@@ -29,7 +27,7 @@ public class ActiveMQHelper {
         ArrayList<Thread> produceTasks = new ArrayList<>(amountOfThreads);
         ArrayList<Thread> consumeTasks = new ArrayList<>(amountOfThreads);
 
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
         connection = connectionFactory.createConnection();
         connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -46,7 +44,13 @@ public class ActiveMQHelper {
                 }
             }));
             produceTasks.get(i).start();
+        }
 
+        for (int i = 0; i < amountOfThreads; i++) {
+            produceTasks.get(i).join();
+        }
+
+        for (int i = 0; i < amountOfThreads; i++) {
             consumeTasks.add(new Thread(() -> {
                 try {
                     consume();
@@ -58,7 +62,6 @@ public class ActiveMQHelper {
         }
 
         for (int i = 0; i < amountOfThreads; i++) {
-            produceTasks.get(i).join();
             consumeTasks.get(i).join();
         }
 
@@ -68,18 +71,33 @@ public class ActiveMQHelper {
     private void produce(LinkedList<Integer> produceList) throws JMSException {
         MessageProducer producer = session.createProducer(destination);
 
-        ObjectMessage message = (ObjectMessage) produceList;
-        producer.send(message);
+        String produceListString = produceList.stream().map(Object::toString).collect(Collectors.joining(","));
+        TextMessage textMessage = session.createTextMessage(produceListString);
+
+        producer.send(textMessage);
     }
 
     public volatile LinkedList<Integer> resultList = new LinkedList<Integer>();
 
     private void consume() throws JMSException {
         MessageConsumer consumer = session.createConsumer(destination);
-        ObjectMessage message = (ObjectMessage) consumer.receive();
+        consumer.setMessageListener(tempMessage -> {
+            try {
+                TextMessage textMessage = (TextMessage) tempMessage;
+                String messageText = textMessage.getText();
 
-        temporaryList = orderList((LinkedList<Integer>) message, temporaryList);
-        resultList = merge(temporaryList, resultList);
-        temporaryList.clear();
+                LinkedList<Integer> messageList = new LinkedList<>();
+                for (String message : messageText.split(",")) {
+                    messageList.add(Integer.parseInt(message));
+                }
+
+                temporaryList = orderList(messageList, temporaryList);
+                resultList = merge(temporaryList, resultList);
+                temporaryList.clear();
+
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -2,6 +2,7 @@ package helpers;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class StrandSortHelperMethods {
     public static LinkedList<Integer> merge(LinkedList<Integer> left, LinkedList<Integer> right) {
@@ -18,10 +19,10 @@ public class StrandSortHelperMethods {
         return result;
     }
 
-    public static LinkedList<Integer> orderList(LinkedList<Integer> listPart, LinkedList<Integer> resultList) {
+    public static LinkedList<Integer> orderList(List listPart, LinkedList<Integer> resultList) {
         while (listPart.size() > 0) {
             LinkedList<Integer> subList = new LinkedList<>();
-            subList.add(listPart.removeFirst());
+            subList.add((Integer) listPart.remove(0));
 
             for (Iterator<Integer> it = listPart.iterator(); it.hasNext(); ) {
                 Integer elem = it.next();
